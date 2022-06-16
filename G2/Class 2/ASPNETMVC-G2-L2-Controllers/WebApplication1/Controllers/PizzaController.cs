@@ -1,37 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PizzApp.Database;
+using PizzApp.Models.Entities;
+using System.Diagnostics;
+using WebApplication1.Models;
 
 namespace PizzApp.Controllers
 {
-    [Route("pizza")]
+    //  [Route("pizza")]
     public class PizzaController : Controller
     {
-        [Route("home")]
-        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            List<Pizza> pizzas = PizzaDatabase.PIZZAS;
+            return View(pizzas);
         }
 
-        [Route("create")]
-        [HttpPost]
-        public IActionResult CreatePizza()
+        public IActionResult Details(int id)
         {
-            return Ok("Success");
+            Pizza pizza = PizzaDatabase.PIZZAS.FirstOrDefault(x => x.Id == id);
+
+            if (pizza is null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            return View(pizza);
         }
 
-        [Route("")]
-        [HttpGet]
-        public IActionResult GetPizzaById([FromQuery] int id, [FromQuery] string name)
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
-            return Ok($"{id} - {name}");
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        //    [Route("home")]
+        //    [HttpGet]
+        //    public IActionResult Index()
+        //    {
+        //        return View();
+        //    }
 
-        [Route("name/{pizzaName}")]
-        [HttpGet]
-        public IActionResult GetPizzaByName(string pizzaName)
-        {
-            return Ok(pizzaName);
-        }
+        //    [Route("create")]
+        //    [HttpPost]
+        //    public IActionResult CreatePizza()
+        //    {
+        //        return Ok("Success");
+        //    }
+
+        //    [Route("")]
+        //    [HttpGet]
+        //    public IActionResult GetPizzaById([FromQuery] int id, [FromQuery] string name)
+        //    {
+        //        return Ok($"{id} - {name}");
+        //    }
+
+
+        //    [Route("name/{pizzaName}")]
+        //    [HttpGet]
+        //    public IActionResult GetPizzaByName(string pizzaName)
+        //    {
+        //        return Ok(pizzaName);
+        //    }
     }
 }
