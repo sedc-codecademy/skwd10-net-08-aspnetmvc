@@ -85,5 +85,5 @@ As you can imagine writing code in a huge chunk of a document is not the best wa
 
 ## Contact
 
-- trainer@mail.com
-- assistant@mail.com
+- panovski.martin93@gmail.com
+- jovana.miskimovska@gmail.com
