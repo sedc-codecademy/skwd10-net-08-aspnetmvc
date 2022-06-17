@@ -1,0 +1,21 @@
+﻿@model Pizza
+
+<h2>Details:</h2>
+
+<b>Name:</b>
+<p>@Model.Name</p>
+
+<b>Price:</b>
+<p>@Model.Price</p>
+
+<b>On promotion:</b>
+@*@if(Model.IsOnPromotion)
+{
+    <p>Yes</p>
+}
+else
+{
+    <p>No</p>
+}*@
+
+<p>@(Model.IsOnPromotion ? "Yes" : "No")</p>
