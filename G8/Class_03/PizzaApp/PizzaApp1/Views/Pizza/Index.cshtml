@@ -1,0 +1,36 @@
+﻿@using PizzaApp1.Models.ViewModel
+@model PizzaIndexViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<a class="btn btn-primary" asp-controller="Pizza" asp-action="Create">Create new pizza</a>
+<table class="table table-active table-bordered">
+    <thead>
+        <tr>
+            <td>
+                Pizza name
+            </td>
+            <td>
+                Pizza price
+            </td>
+            <td>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pizza in Model.Pizzas)
+        {
+            <tr>
+                <td><a asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id" class="pizza-name">@pizza.Name</a></td>
+
+                <td><div class="@Model.PriceClassName">@pizza.Price</div></td>
+                <td>
+                    <a asp-controller="Pizza" asp-action="Edit" asp-route-id="@pizza.Id" class="btn btn-link">Edit</a>
+                    <a asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

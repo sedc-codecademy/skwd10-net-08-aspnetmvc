@@ -1,0 +1,22 @@
+﻿@using PizzaApp1.Models.Domain
+@model Pizza
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-controller="Pizza" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <label asp-for="Name">
+        <input asp-for="Name" />
+    </label>
+    <label asp-for="Price">
+        <input asp-for="Price" />
+    </label>
+    <label asp-for="Size">
+        <input asp-for="Size" />
+    </label>
+    <button>
+        Submit
+    </button>
+</form>
