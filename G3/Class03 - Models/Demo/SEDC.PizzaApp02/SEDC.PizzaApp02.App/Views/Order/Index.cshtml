@@ -1,0 +1,7 @@
+﻿@model List<OrderListViewModel>
+
+
+@foreach(var order in Model) 
+{
+    <p>@order.PizzaName | Ordered by: @order.UserFullName</p>
+}
