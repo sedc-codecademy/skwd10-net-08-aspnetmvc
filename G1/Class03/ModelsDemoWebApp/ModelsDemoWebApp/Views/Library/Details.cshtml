@@ -1,0 +1,51 @@
+﻿@model Library
+
+<h1>@Model.Name</h1>
+
+<h3>Books</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">ISBN</th>
+      <th scope="col">Pages</th>
+      <th scope="col">Authors</th>
+    </tr>
+  </thead>
+  <tbody>
+        @foreach (var book in @Model.Books)
+        {
+            <tr>
+              <td>@book.Id</td>
+              <td>@book.Name</td>
+              <td>@book.ISBN</td>
+              <td>@book.Pages</td>
+              <td>@string.Join(",", book.Authors.Select(x => $"{x.FirstName} {x.LastName}"))</td>
+            </tr>
+        }
+  </tbody>
+</table>
+
+<h3>Authors</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Date of birth</th>
+    </tr>
+  </thead>
+  <tbody>
+        @foreach (var author in @Model.Authors)
+        {
+            <tr>
+              <td>@author.Id</td>
+              <td>@author.FirstName</td>
+              <td>@author.LastName</td>
+              <td>@author.DateOfBirth.ToString("dd.MM.yyyy")</td>
+            </tr>
+        }
+  </tbody>
+</table>
