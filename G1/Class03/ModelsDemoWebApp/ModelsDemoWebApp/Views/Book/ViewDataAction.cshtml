@@ -1,0 +1,9 @@
+﻿@{
+    var book = (Book)ViewData["Book"];
+}
+
+<h2>@book.Name</h2>
+
+@foreach(var author in book.Authors) {
+    <h4>@author.FirstName @author.LastName</h4>
+}

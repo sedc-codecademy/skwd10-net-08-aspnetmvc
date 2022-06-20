@@ -1,0 +1,7 @@
+﻿@model Book
+
+
+<h3>@Model.Name</h3>
+<h5>@Model.ISBN</h5>
+<h5>@Model.Pages</h5>
+<h5>@string.Join(",", @Model.Authors.Select(x => $"{x.FirstName} {x.LastName}"))</h5>

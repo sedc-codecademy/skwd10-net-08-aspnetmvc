@@ -1,0 +1,5 @@
+﻿<h2>@ViewBag.Book.Name</h2>
+
+@foreach(var author in ViewBag.Book.Authors) {
+    <h4>@author.FirstName @author.LastName</h4>
+}
