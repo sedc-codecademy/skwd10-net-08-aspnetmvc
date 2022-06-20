@@ -1,0 +1,7 @@
+﻿@model List<Pizza>
+
+<ul>
+	@foreach (Pizza pizza in @Model) {
+	<li><a  asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id"> @pizza.Name </a> - @pizza.Price - Is On Promotion : @pizza.IsOnPromotion </li>
+	}
+</ul>
