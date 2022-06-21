@@ -1,4 +1,5 @@
-﻿using Database;
+﻿using AutoMapper;
+using Database;
 using Microsoft.AspNetCore.Mvc;
 using Models.Mappers;
 using Models.ViewModels;
@@ -7,10 +8,17 @@ namespace Controllers
 {
     public class PizzaController : Controller
     {
+        private readonly IMapper _mapper;
+
+        public PizzaController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            List<PizzaListViewModel> pizzaListViewModel = PizzaDb.PIZZAS.Select(x => x.ToPizzaListViewModel()).ToList();
+            List<PizzaListViewModel> pizzaListViewModel = PizzaDb.PIZZAS.Select(x => _mapper.Map<PizzaListViewModel>(x)).ToList();
             ViewData["PizzaCount"] = pizzaListViewModel.Count;
 
             ViewBag.AllPizzas = pizzaListViewModel;
@@ -20,10 +28,11 @@ namespace Controllers
         [HttpGet]
         [Route("pizza-details")]
         public IActionResult Details([FromQuery] int id)
-        {
-            PizzaDetailsViewModel pizzaDetailsViewModel = PizzaDb.PIZZAS.FirstOrDefault(x => x.Id == id).ToPizzaDetailsViewModel();
-            ViewData["Message"] = "The pizza is great!";
-            return View(pizzaDetailsViewModel);
+        {   
+           var pizza = PizzaDb.PIZZAS.FirstOrDefault(x => x.Id == id);
+           PizzaDetailsViewModel pizzaDetailsViewModel = _mapper.Map<PizzaDetailsViewModel>(pizza);
+           ViewData["Message"] = "The pizza is great!";
+           return View(pizzaDetailsViewModel);
         }
     }
 }

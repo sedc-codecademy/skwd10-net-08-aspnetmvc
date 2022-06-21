@@ -10,7 +10,7 @@ namespace Models.Mappers
             return new PizzaListViewModel()
             {
                 Id = pizza.Id,
-                PizzaName = pizza.Name
+                Name = pizza.Name
             };
         }
 
@@ -18,7 +18,7 @@ namespace Models.Mappers
         {
             return new PizzaDetailsViewModel()
             {
-                PizzaName = pizza.Name,
+                Name = pizza.Name,
                 IsOnPromotion = pizza.IsOnPromotion,
                 Price = pizza.Price
             };
