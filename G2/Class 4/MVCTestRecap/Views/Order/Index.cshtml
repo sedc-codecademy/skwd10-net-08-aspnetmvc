@@ -1,0 +1,4 @@
+﻿@model OrderListViewModel;
+@foreach(OrderViewModel order in @Model.Orders) {
+	@Html.Partial("../Partials/_OrderInfo.cshtml", order);
+}
