@@ -1,0 +1,43 @@
+﻿@model User
+
+@{
+    string employmentStatus = "Not employeed";
+    string employmentCssClass = Model.IsEmployeed ? "employeed" : "not-employeed";
+    if (Model.IsEmployeed)
+    {
+        employmentStatus = "Employeed";
+    }
+}
+
+
+<div class="container">
+    <h2>@Model.ToString()</h2>
+    <p>Name: @($"Mr/Ms {Model.FirstName} {Model.LastName}")</p>
+    <p>Age: @Model.Age</p>
+    <p>City: @Model.City</p>
+
+    <p class="@employmentCssClass">Employment status: @employmentStatus</p>
+    <p>@(Model.IsEmployeed ? "Employeed" : "Not Employeed")</p>
+</div>
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">City</th>
+            <th scope="col">Employment status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Id</td>
+            <td>Name: @($"Mr/Ms {Model.FirstName} {Model.LastName}")</td>
+            <td>Age: @Model.Age</td>
+            <td>City: @Model.City</td>
+            <td class="@employmentCssClass">Employment status: @employmentStatus</td>
+        </tr>
+    </tbody>
+</table>*@
