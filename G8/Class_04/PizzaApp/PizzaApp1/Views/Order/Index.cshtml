@@ -1,0 +1,46 @@
+﻿@using PizzaApp1.Models.Domain
+@model IList<Order>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+@*<style>
+    .table-active{
+
+    }
+
+     .table-active thead{
+    }
+</style>*@
+<table class="table table-active table-bordered">
+    <thead>
+        <tr>
+            <td>Link</td>
+            <td>
+                For User
+            </td>
+            <td>
+                Price
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var order in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id">Link to order</a>
+                </td>
+                <td>
+                    @order.User.Name
+                </td>
+                <td>
+                    @order.Price
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

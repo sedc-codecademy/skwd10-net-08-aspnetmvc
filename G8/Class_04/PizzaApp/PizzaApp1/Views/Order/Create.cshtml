@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    as is used for casting to type
+    is
+    if(ViewBag.Pizzas is IList<Pizza> pizzas)
+    {
+        pizzas
+    }
+    var test = (IList<Pizza>)ViewBag.Pizzas
+*@
+
+<div>
+    <form asp-controller="Order" asp-action="Create" method="post">
+        <div>
+            <h5>Pizzas</h5>
+            <input type="text" name="testName" />
+            @foreach (var pizza in (ViewBag.Pizzas as IList<Pizza>)!)
+            {
+                <div>
+                    @pizza.Name
+                    <input name="Pizzas" type="checkbox" value="@pizza.Id" />
+
+                </div>
+            }
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
