@@ -1,0 +1,11 @@
+﻿@model UserViewModel
+
+@foreach(var user in Model.Users)
+{
+    @Html.Partial("~/Views/Shared/Partial/_User.cshtml", user);
+}
+
+
+    
+
+

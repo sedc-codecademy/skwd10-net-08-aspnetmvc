@@ -1,0 +1,18 @@
+﻿@using MovieWebApp.Entites
+@model Movie
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">@Model.Name</h5>
+    <h6 class="card-subtitle mb-2 text-muted">@Model.Genre</h6>
+    <p class="card-text">Duration: @Model.Length minutes.</p>
+    <p>
+            @{
+                @for (var i = 1; i <= 10; i++)
+                {
+                    <span class="fa fa-star @(i <= Model.ImdbRating ? "checked" : "")"></span>
+                }
+            }
+    </p>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "_Layout2";
+}
+
+@using MovieWebApp.Entites
+
+@model List<Movie>
+
+@{
+    var dramaMovies = Model.Where(x => x.Genre == Genre.Drama).ToList();
+}
+
+<h2>Kino Cineplexx</h2>
+@Model.Count() + 5
+@(Model.Count() + 5)
+
+@*Film: Tetoviranje*@
+
+@("Film: " + Model[0].Name)
+
+<p>Film: @Model[0].Name</p>
+
+@{
+    //<ul class="list-group">
+    //    @for (var i = 0; i < Model.Count(); i++)
+    //    {
+    //        if (i == 0)
+    //        {
+    //            <li class="list-group-item active">@Model[i].Name</li>
+    //        } else
+    //        {
+    //            <li class="list-group-item">@Model[i].Name</li>
+    //        }
+    //    }
+    //    <br />
+    //    @for (var i = 0; i < Model.Count(); i++)
+    //    {
+    //        <li class="list-group-item @(i == 0 ? "active" : "")">@Model[i].Name</li>
+    //    }
+    //    <br />
+    //    <h3>Drama movies:</h3>
+    //    @for (var i = 0; i < dramaMovies.Count; i++)
+    //    {
+    //        <li class="list-group-item @(i == 0 ? "active" : "")">@dramaMovies[i].Name</li>
+    //    }
+    //</ul>
+
+    @for (var i = 0; i < Model.Count(); i++)
+    {
+        //@Html.Partial("~/Views/Shared/_MovieDetails.cshtml", Model[i])
+        <partial name="_MovieDetails" model='Model[i]' />
+    }
+}
+
+
