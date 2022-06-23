@@ -26,5 +26,10 @@ namespace Database
                 }
             }
         };
+
+        public static int GetNextOrderId()
+        {
+            return (ORDERS.OrderByDescending(x => x.Id).FirstOrDefault()?.Id ?? 0) + 1;
+        }
     }
 }
