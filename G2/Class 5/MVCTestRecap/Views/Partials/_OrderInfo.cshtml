@@ -1,0 +1,4 @@
+﻿@model OrderViewModel;
+<h1><label asp-for="@Model.Id"></label> : @Html.TextBoxFor(x => x.Id)</h1>
+<h2><label asp-for="@Model.CreatedAt"></label> @Model.CreatedAt.ToShortDateString()</h2>
+<h3>Total Price: @Model.TotalPrice MKD</h3>

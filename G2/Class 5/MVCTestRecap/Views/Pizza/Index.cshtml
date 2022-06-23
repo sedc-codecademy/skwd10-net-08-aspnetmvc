@@ -1,0 +1,26 @@
+﻿@model List<PizzaListViewModel>
+
+@{
+    ViewData["Title"] = "Pizzas";  
+}
+
+<h1>Pizzas:</h1>
+
+<p>Number of pizzas: @ViewData["PizzaCount"]</p>
+
+
+<h3>With viewmodels</h3>
+<ul>
+@foreach(PizzaListViewModel pizza in @Model){
+    <li>@pizza.Name</li>
+    <a asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id">Details</a>
+}   
+</ul>
+
+<h3>With ViewBag</h3>
+<ol>
+@foreach(PizzaListViewModel piz in @ViewBag.AllPizzas){
+        <li>@piz.Name</li>
+    <a asp-controller="Pizza" asp-action="Details" asp-route-id="@piz.Id">Details</a>
+}
+</ol>
