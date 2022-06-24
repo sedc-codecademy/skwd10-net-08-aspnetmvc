@@ -1,7 +1,7 @@
 # Addition to Pizza App 🍕 
 
 ## Part 1
-The first part of the addition of Pizza App will be to create a 'Details' action in the Order Controller to retrieve information about one order based on the id, and to 
+The first part of the addition of Pizza App will be to create a 'Details' action in the Order Controller to retrieve information (PizzaName, UserName, PaymentMethod, Price, Delivered) about one order based on the id, and to 
 create a corresponding View for that action. 
 
 ## Part 2
