@@ -1,0 +1,16 @@
+﻿@model Book
+
+@Html.Display("Name")
+<br />
+@Html.DisplayFor(x => x.Name)
+<br />
+@Model.Name
+
+<br />
+@Html.Label("Name")
+<br />
+@Html.LabelFor(x => x.Name)
+@Html.TextBoxFor(x => x.Name)
+<br />
+<label asp-for="Name"></label>
+<input asp-for="Name"/> 
