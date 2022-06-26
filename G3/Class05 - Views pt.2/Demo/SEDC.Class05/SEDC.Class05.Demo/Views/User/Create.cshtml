@@ -1,0 +1,27 @@
+﻿@model User 
+
+@using(@Html.BeginForm("Create", "User", FormMethod.Post))
+{
+    @Html.LabelFor(x => x.FirstName)
+    @Html.TextBoxFor(x => x.FirstName)
+    @Html.ValidationMessageFor(x => x.FirstName, "", new {@class = "text-danger"})
+    <br />
+    <br />
+
+    @Html.LabelFor(x => x.LastName)
+    @Html.TextBoxFor(x => x.LastName, new { @required = "required" })
+    <br />
+    <br />
+
+    @Html.LabelFor(x => x.Age)
+    @Html.TextBoxFor(x => x.Age, new { @required = "required" })
+    <br />
+    <br />
+
+    @Html.LabelFor(x => x.City)
+    @Html.TextBoxFor(x => x.City, new { @required = "required" })
+    <br />
+    <br />
+
+    <button type="submit">Save</button>
+}

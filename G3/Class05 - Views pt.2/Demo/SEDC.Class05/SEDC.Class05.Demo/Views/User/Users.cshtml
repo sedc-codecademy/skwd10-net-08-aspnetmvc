@@ -1,0 +1,10 @@
+﻿@model List<User>
+
+@foreach (var user in Model)
+{
+    <p>@user.FirstName</p>
+    <p>@user.LastName</p>
+    <p>@user.Age</p>
+    <p>@user.City</p>
+    <hr />
+}
