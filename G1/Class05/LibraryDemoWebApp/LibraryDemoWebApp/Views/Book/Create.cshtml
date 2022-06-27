@@ -2,7 +2,9 @@
 
 <form asp-action="Save" asp-controller="Book" method="post">
     <div class="form-group">
-        <label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" />
+        <label asp-for="Name" class="form-label"></label>        
+        @*@Html.LabelFor(x => x.Name, htmlAttributes: new { @class = "form-label" })*@
+        <input asp-for="Name" class="form-control" />
         <label asp-for="ISBN" class="form-label"></label><input asp-for="ISBN" class="form-control" />
         <label asp-for="Pages" class="form-label"></label><input asp-for="Pages" type="number" class="form-control"/>
         <div>

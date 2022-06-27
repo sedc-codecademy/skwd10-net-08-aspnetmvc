@@ -1,0 +1,24 @@
+﻿@using System.Globalization;
+@model List<MenuItemViewModel>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name (Description)</th>
+      <th scope="col">Size (Description)</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+        @for (var i = 0; i < Model.Count; i++)
+        {            
+            <tr>
+              <th scope="row">@Model[i].Id</th>
+              <td>@Model[i].Pizza.Name (@Model[i].Pizza.Description)</td>
+              <td>@Model[i].Size.Name (@Model[i].Size.Description)</td>
+              <td>@Model[i].Price.ToString("C", CultureInfo.CreateSpecificCulture("mk-MK"))</td>
+            </tr>
+        }
+      </tbody>
+    </table>
