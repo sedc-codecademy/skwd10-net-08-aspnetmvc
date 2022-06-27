@@ -1,0 +1,28 @@
+﻿@model User
+
+<form asp-action="Edit" asp-controller="User" method="post">
+    <label asp-for="FirstName"></label>
+    <input asp-for="FirstName"/>
+    <span class="text-danger" asp-validation-for="FirstName"></span>
+    <br />
+    <br />
+
+    <label asp-for="LastName"></label>
+    <input asp-for="LastName"/>
+    <br />
+    <br />
+
+    <label asp-for="Age"></label>
+    <input asp-for="Age"/>
+    <br />
+    <br />
+
+    <label asp-for="City"></label>
+    <input asp-for="City"/>
+    <br />
+    <br />
+
+    <button type="submit">Update</button>
+</form>
+
+<p class="text-danger" hidden>@ViewBag.ErrorMessage</p>

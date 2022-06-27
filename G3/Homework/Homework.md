@@ -25,5 +25,15 @@ Users will not be part of the prototype at this moment. Here is some business do
   * Burgers
   * Location ( String )
 
-  ## Bonus
-  Considering the previous information, think about the Controllers and try to implement some in the application (don't implement the actions still!)
+## Bonus
+Considering the previous information, think about the Controllers and try to implement some in the application (don't implement the actions still!)
+  
+## Part 2
+The second part of the implementation will be to create appropriate Actions in the Order Controller for:
+  * Create
+  * Edit
+  * Details
+
+Taking that into consideration, you will need to create appropriate Views for each method.
+  
+  

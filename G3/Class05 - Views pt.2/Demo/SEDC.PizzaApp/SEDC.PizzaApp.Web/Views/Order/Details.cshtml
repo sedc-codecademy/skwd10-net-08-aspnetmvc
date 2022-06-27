@@ -1,0 +1,24 @@
+﻿@model OrderDetailsViewModel
+
+
+@*TODO// ADD BREADCRUMBS AS PARTIAL VIEW *@
+
+<p>
+    <label asp-for="PizzaName"></label> : @Html.DisplayFor(x => x.PizzaName)
+</p>
+<p>
+    User: @($"Mr/Ms: {Model.UserFullName}")
+</p>
+<p>
+    Payment method: @Model.PaymentMethod
+</p>
+<p>
+    Order price: @Model.Price
+</p>
+<p>
+    @(Model.IsDelivered ? "Delivered" : "Not delivered")
+</p>
+
+<a class="btn btn-primary" asp-action="Index">Back to orders</a>
+
+<a class="btn btn-success" asp-action="Index" asp-controller="Home">Back to home</a>
