@@ -1,0 +1,42 @@
+﻿@model List<OrderListViewModel>
+
+
+<h2>@ViewData["Title"]</h2>
+@{
+    int count = 1;
+}
+@foreach (var order in Model)
+{
+    <p id="delete_@count">
+        <a asp-action="Details" asp-controller="Order" asp-route-id="@count">
+            <span>@(count)</span>
+        </a>
+        @order.PizzaName | Ordered by: @order.UserFullName
+        <span>
+            <a class="btn btn-danger" onclick="deleteOrder(@count)">Delete</a>
+        </span>
+    </p>
+    count++;
+}
+
+<h4>@ViewData["Message"]</h4>
+<h5>@ViewData["FirstUser"]</h5>
+
+
+<script>
+    function deleteOrder(id){
+        let elementToDelete = $("#delete_" + id);
+        $.ajax({
+            url: "/order/deleteorder/" + id,
+            success: function(data) {
+                if(data.isDeleted){
+                    alert(data.message);
+                    elementToDelete.hide();
+                }
+            },
+            error: function(err) {
+                alert(err);
+            }
+        })
+    }
+</script>
