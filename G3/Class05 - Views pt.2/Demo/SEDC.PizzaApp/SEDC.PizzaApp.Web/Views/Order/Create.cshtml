@@ -1,0 +1,32 @@
+﻿@model OrderViewModel
+
+<h3>Create new order:</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label class="form-label" asp-for="PizzaName"></label>
+                <input class="form-control" type="text" asp-for="PizzaName" />
+                <span class="text-danger" asp-validation-for="PizzaName"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="PaymentMethod"></label>
+                <select class="form-control" asp-for="PaymentMethod" asp-items="Html.GetEnumSelectList<PaymentMethod>()">
+                    <option>Select payment method</option>
+                </select>
+                <span class="text-danger" asp-validation-for="PaymentMethod"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="UserId"></label>
+                <select class="form-control" asp-for="UserId" asp-items="@(new SelectList(ViewBag.Users, "Id", "FullName"))">
+                    <option>Select user</option>
+                </select>
+
+                @*@Html.DropDownListFor(x => x.UserId, new SelectList(ViewBag.Users, "Id", "FullName"), "Select user")*@
+            </div>
+
+            <button class="btn btn-outline-primary" type="submit">Save</button>
+        </form>
+    </div>
+</div>

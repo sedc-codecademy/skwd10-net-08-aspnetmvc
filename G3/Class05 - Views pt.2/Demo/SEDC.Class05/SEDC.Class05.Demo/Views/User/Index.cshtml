@@ -1,0 +1,30 @@
+﻿@model User
+
+
+@* ==== Display property value in the HTML using Display() html helper ==== *@
+
+@* ==== Lable using html helper ==== *@
+
+@*@Html.Label("FirstName")*@
+@*@Html.LabelFor(x => x.FirstName)*@
+
+<label asp-for="FirstName"></label>
+
+@Html.Display("FirstName")
+
+
+@* ==== Lable using html helper ==== *@
+@*@Html.Label("LastName")*@
+@*@Html.LabelFor(x => x.LastName)*@
+
+
+
+@* ==== Lable using tag helper ==== *@
+<label asp-for="LastName"></label>
+@Html.DisplayFor(x => x.LastName)
+
+
+
+
+
+

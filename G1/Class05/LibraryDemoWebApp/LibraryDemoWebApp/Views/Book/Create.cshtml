@@ -1,0 +1,31 @@
+﻿@model BookCreateViewModel
+
+<form asp-action="Save" asp-controller="Book" method="post">
+    <div class="form-group">
+        <label asp-for="Name" class="form-label"></label>        
+        @*@Html.LabelFor(x => x.Name, htmlAttributes: new { @class = "form-label" })*@
+        <input asp-for="Name" class="form-control" />
+        <label asp-for="ISBN" class="form-label"></label><input asp-for="ISBN" class="form-control" />
+        <label asp-for="Pages" class="form-label"></label><input asp-for="Pages" type="number" class="form-control"/>
+        <div>
+            <label asp-for="Authors" class="form-label"></label>
+                    @*@Html.DropDownListFor(x => x.Authors, (IEnumerable<SelectListItem>) ViewBag.Authors, "-- Select Author --")*@
+            <select asp-for="Authors" asp-items="(IEnumerable<SelectListItem>) ViewBag.Authors" class="form-control">
+                <option>-- Select Author --</option>
+            </select>
+        </div>
+        <div>
+                    @foreach (var item in (List<KeyValuePair<int, string>>)ViewBag.BookTypes)
+                    {
+                        <input asp-for="BookType" type="radio" value="@item.Key"/> @item.Value
+                    }
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+@*@using(Html.BeginForm("Save", "Book")) {
+    <button type="submit">Save</button>
+}*@
