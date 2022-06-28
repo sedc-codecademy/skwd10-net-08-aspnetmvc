@@ -1,5 +1,6 @@
 ﻿using Database;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Domain;
 using Models.Mappers;
 using Models.ViewModels;
@@ -18,7 +19,13 @@ namespace Controllers
         [HttpGet]
         public IActionResult CreateOrder()
         {
-            return View();
+            ViewBag.Pizzas = PizzaDb.PIZZAS.Select(x => x.ToPizzaDetailsViewModel()).ToList();
+
+            OrderViewModel orderViewModel = new OrderViewModel()
+            {
+            };
+
+            return View(orderViewModel);
         }
 
         [HttpPost]
@@ -26,11 +33,21 @@ namespace Controllers
         {
             int id = PizzaDb.GetNextOrderId();
 
+            Pizza selectedPizza = PizzaDb.PIZZAS.SingleOrDefault(x => x.Id == order.PizzaId);
+
+            if (selectedPizza is null)
+            {
+                return NotFound();
+            }
+
             Order newOrder = new Order()
             {
                 Id = id,
                 CreatedAt = order.CreatedAt,
                 Pizzas = new List<Pizza>()
+                {
+                   selectedPizza
+                }
             };
 
             PizzaDb.ORDERS.Add(newOrder);
