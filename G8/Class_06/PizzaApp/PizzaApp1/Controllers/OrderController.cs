@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaApp.Application.Services;
-using PizzaApp.Application.Services.Implementation;
 using PizzaApp.Application.ViewModel;
-using PizzaApp.StaticDb.Repository;
-using PizzaApp1.Models.Db;
-using PizzaApp1.Models.Domain;
-using PizzaApp1.Models.Mapper;
-using PizzaApp1.Models.ViewModel;
+using PizzaApp.Application.ViewModel.Order;
 
 namespace PizzaApp1.Controllers
 {
     // order
     public class OrderController : Controller
     {
-        private IOrderService orderService;
-        public OrderController(IOrderService orderService)
+        private readonly IOrderService orderService;
+        private readonly IPizzaService pizzaService;
+
+        public OrderController(IOrderService orderService, IPizzaService pizzaService)
         {
             this.orderService = orderService;
+            this.pizzaService = pizzaService;
         }
 
         public IActionResult Index()
@@ -32,7 +30,7 @@ namespace PizzaApp1.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var pizzas = PizzaAppDb.Pizzas.ToList();
+            var pizzas = pizzaService.GetAllPizza();
             ViewBag.Pizzas = pizzas;
             return View();
         }
@@ -47,46 +45,14 @@ namespace PizzaApp1.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var order = PizzaAppDb.Orders.FirstOrDefault(x => x.Id == id);
-            if (order is null)
-            {
-                return new EmptyResult();
-            }
-
-            var vmodel = order.ToEditViewModel();
-            return View(vmodel);
+            var model = orderService.GetOrder(id);
+            return View(model);
         }
 
         [HttpPost]
         public IActionResult Edit(int id, OrderEditViewModel model)
         {
-            using var db = new ApplicationDbContext();
-            var order = db.Orders.FirstOrDefault(x => x.Id == id);
-            if (order is null)
-            {
-                return new EmptyResult();
-            }
-            order.Pizzas.Clear();
-
-            var selectedPizzas = model.Pizzas.Where(x => x.IsSelected);
-
-            var orderedPizzas = new List<Pizza>();
-            foreach (var pizza in selectedPizzas)
-            {
-                var pizzaModel = PizzaAppDb.Pizzas.FirstOrDefault(x => x.Id == pizza.PizzaId);
-                if (pizzaModel == null)
-                    throw new Exception("Pizza doesn't exist");
-
-
-                Enumerable.Range(0, pizza.NumberOfPizzas).ToList().ForEach(_ =>
-                {
-                    orderedPizzas.Add(pizzaModel);
-                });
-
-            }
-
-            order.Pizzas = orderedPizzas;
-
+            orderService.EditOrder(id, model);
             return RedirectToAction("Index");
         }
     }

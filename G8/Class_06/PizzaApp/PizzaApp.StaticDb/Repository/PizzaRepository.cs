@@ -1,12 +1,17 @@
 ﻿using PizzaApp.Application.Repository;
 using PizzaApp.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PizzaApp.StaticDb.Repository
 {
-    public class OrderRepository
-        : IRepository<Order>
+    public class PizzaRepository
+        : IRepository<Pizza>
     {
-        public Order Create(Order entity)
+        public Pizza Create(Pizza entity)
         {
             throw new NotImplementedException();
         }
@@ -21,17 +26,17 @@ namespace PizzaApp.StaticDb.Repository
             throw new NotImplementedException();
         }
 
-        public IQueryable<Order> GetAll()
+        public IQueryable<Pizza> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Order GetById(int id)
+        public Pizza GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Order entity)
+        public void Update(Pizza entity)
         {
             throw new NotImplementedException();
         }

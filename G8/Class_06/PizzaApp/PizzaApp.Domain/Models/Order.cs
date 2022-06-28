@@ -33,6 +33,22 @@
 
         public ICollection<Pizza> Pizzas { get; set; } = new List<Pizza>();
 
+        public void ClearPizzas()
+        {
+            Pizzas.Clear();
+        }
+
+        public void AddPizza(Pizza? pizza, int numberOfPizzas)
+        {
+            if (pizza == null)
+                throw new Exception("Pizza doesn't exist");
+
+            Enumerable.Range(0, numberOfPizzas).ToList().ForEach(_ =>
+            {
+                Pizzas.Add(pizza);
+            });
+        }
+
         public void Pay()
         {
             if (!CanBeDelivered)

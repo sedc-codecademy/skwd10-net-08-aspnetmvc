@@ -1,7 +1,6 @@
-﻿
-using PizzaApp.Domain.Models;
+﻿using PizzaApp.Domain.Models;
 
-namespace PizzaApp.Application.ViewModel
+namespace PizzaApp.Application.ViewModel.Pizza
 {
     public class PizzaIndexViewModel
     {

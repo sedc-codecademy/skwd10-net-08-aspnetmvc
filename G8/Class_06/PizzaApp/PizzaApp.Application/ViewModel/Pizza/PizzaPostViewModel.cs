@@ -1,6 +1,6 @@
 ﻿using PizzaApp.Domain.Enums;
 
-namespace PizzaApp.Application.ViewModel
+namespace PizzaApp.Application.ViewModel.Pizza
 {
     public class PizzaPostViewModel
     {

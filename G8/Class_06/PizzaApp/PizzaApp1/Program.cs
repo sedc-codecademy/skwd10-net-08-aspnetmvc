@@ -9,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddMvc().AddNewtonsoftJson();
 builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
+builder.Services.AddSingleton<IRepository<Pizza>, PizzaRepository>();
 //builder.Services.AddSingleton<IRepository<Order>, OrderEFRepository>();
 
 builder.Services.AddSingleton<IOrderService, OrderService>();
+builder.Services.AddSingleton<IPizzaService, PizzaService>();
 
 var app = builder.Build();
 

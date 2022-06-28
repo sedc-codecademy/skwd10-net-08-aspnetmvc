@@ -1,12 +1,14 @@
-﻿using PizzaApp.Application.Repository;
+﻿using PizzaApp.Application.Mapper;
+using PizzaApp.Application.Repository;
 using PizzaApp.Application.Services.ExternalServices;
 using PizzaApp.Application.ViewModel;
+using PizzaApp.Application.ViewModel.Order;
 using PizzaApp.Domain.Models;
 
 
 namespace PizzaApp.Application.Services.Implementation
 {
-    public  class OrderService
+    public class OrderService
         : IOrderService
     {
         private readonly IRepository<Order> repository;
@@ -19,8 +21,7 @@ namespace PizzaApp.Application.Services.Implementation
             this.pizzaRepository = pizzaRepository;
             this.emailSender = emailSender;
         }
-
-        public Order CreateOrder(OrderCreateViewModel model, User user)
+        public OrderViewModel CreateOrder(OrderCreateViewModel model, User user)
         {
             var selectedPizzas = model.Pizzas.Where(x => x.IsSelected);
 
@@ -43,14 +44,11 @@ namespace PizzaApp.Application.Services.Implementation
 
             repository.Create(order);
             emailSender.SendEmailAsync(user.Email, "Thanks for ordering");
-            return order;
+            return order.ToViewModel();
         }
 
-        public Order GetOrder(int id)
+        public OrderViewModel GetOrder(int id)
         {
-            // dali admin ?
-
-            // is conflicted ?
             var order = repository.GetById(id);
 
             if (order == null)
@@ -58,7 +56,24 @@ namespace PizzaApp.Application.Services.Implementation
                 throw new ArgumentException(nameof(order));
             }
 
-            return order;
+            return order.ToViewModel();
+        }
+
+        public void EditOrder(int id, OrderEditViewModel model)
+        {
+            var order = repository.GetById(id);
+            if (order == null)
+            {
+                throw new ArgumentException(nameof(order));
+            }
+
+            order.ClearPizzas();
+
+            foreach (var pizzaModel in model.Pizzas.Where(x => x.IsSelected))
+            {
+                var pizza = pizzaRepository.GetById(pizzaModel.PizzaId);
+                order.AddPizza(pizza, pizzaModel.NumberOfPizzas);
+            }
         }
     }
 }
