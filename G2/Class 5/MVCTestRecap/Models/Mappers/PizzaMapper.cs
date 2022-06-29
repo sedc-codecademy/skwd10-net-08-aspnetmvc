@@ -18,6 +18,7 @@ namespace Models.Mappers
         {
             return new PizzaDetailsViewModel()
             {
+                Id = pizza.Id,
                 Name = pizza.Name,
                 IsOnPromotion = pizza.IsOnPromotion,
                 Price = pizza.Price

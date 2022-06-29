@@ -13,5 +13,8 @@ namespace Models.ViewModels
 
         [Display(Name = "Total price")]
         public decimal TotalPrice { get; set; }
+
+        [Display(Name = "Pizza")]
+        public int PizzaId { get; set; }
     }
 }
