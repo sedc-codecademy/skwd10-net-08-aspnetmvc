@@ -64,8 +64,8 @@ namespace SEDC.PizzaApp.DataAccess
                 new User
                 {
                     Id = 2,
-                    FirstName = "Aleksandar",
-                    LastName = "Manasiev",
+                    FirstName = "Stefan",
+                    LastName = "Trajkov",
                     Address = "Address2",
                     Orders = new List<Order>
                     {
