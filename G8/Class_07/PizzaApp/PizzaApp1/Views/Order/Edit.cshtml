@@ -1,0 +1,30 @@
+﻿@model OrderEditViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-controller="Order" asp-action="Edit" asp-route-id="Id" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    @for (var i = 0; i < Model.Pizzas.Count(); i++)
+    {
+        <div>
+            <input type="hidden" asp-for="Pizzas[i].PizzaId">
+        </div>
+
+        <div>
+            <label asp-for="Pizzas[i].IsSelected"></label>
+            <input type="checkbox" asp-for="Pizzas[i].IsSelected">
+        </div>
+
+        <div>
+            <label asp-for="Pizzas[i].NumberOfPizzas"></label>
+            <input asp-for="Pizzas[i].NumberOfPizzas">
+        </div>
+    }
+    <button>
+        Edit
+    </button>
+</form>
