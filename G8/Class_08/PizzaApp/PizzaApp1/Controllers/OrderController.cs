@@ -3,7 +3,6 @@ using PizzaApp.Application.Services;
 using PizzaApp.Application.ViewModel;
 using PizzaApp.Application.ViewModel.Order;
 using PizzaApp.StaticDb;
-
 namespace PizzaApp1.Controllers
 {
     // order

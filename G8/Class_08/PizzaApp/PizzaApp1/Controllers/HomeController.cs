@@ -11,7 +11,7 @@ namespace PizzaApp1.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _logger.LogDebug("");
+            _logger.LogDebug("Sega sum vo home");
             _logger.LogInformation("");
             _logger.LogWarning("");
             _logger.LogError("");
@@ -20,6 +20,7 @@ namespace PizzaApp1.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogDebug("Sega e povikan index home");
             return View();
         }
 
