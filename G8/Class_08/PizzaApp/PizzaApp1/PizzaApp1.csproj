@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PizzaApp.Application\PizzaApp.Application.csproj" />
     <ProjectReference Include="..\PizzaApp.EntityFreamwork\PizzaApp.EntityFreamwork.csproj" />
+    <ProjectReference Include="..\PizzaApp.Infrastracute\PizzaApp.Infrastracute.csproj" />
     <ProjectReference Include="..\PizzaApp.StaticDb\PizzaApp.StaticDb.csproj" />
   </ItemGroup>
 

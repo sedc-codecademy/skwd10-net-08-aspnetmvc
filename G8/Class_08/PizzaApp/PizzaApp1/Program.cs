@@ -1,7 +1,9 @@
 using PizzaApp.Application.Repository;
 using PizzaApp.Application.Services;
+using PizzaApp.Application.Services.ExternalServices;
 using PizzaApp.Application.Services.Implementation;
 using PizzaApp.Domain.Models;
+using PizzaApp.Infrastracute;
 using PizzaApp.StaticDb.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services.AddSingleton<IRepository<User>, UserRepository>();
 builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IPizzaService, PizzaService>();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 

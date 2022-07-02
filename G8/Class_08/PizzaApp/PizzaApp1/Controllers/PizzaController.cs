@@ -50,7 +50,7 @@ namespace PizzaApp1.Controllers
         {
             var pizzaSize = pizzaService.GetPizzaSizes().ToList();
             ViewBag.pizzaSize = pizzaSize;
-            ViewData.Add("PizzaSize", pizzaService);
+            ViewData.Add("PizzaSize1", pizzaService);
 
             return View();
         }

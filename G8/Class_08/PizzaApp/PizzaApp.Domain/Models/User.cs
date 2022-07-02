@@ -23,11 +23,12 @@
 
         public int Id { get; set; }
 
+        private string name;
         public string Name
         {
             get
             {
-                return Name;
+                return name;
             }
             set
             {
@@ -35,7 +36,7 @@
                 {
                     throw new Exception("Name can not be empty");
                 }
-                Name = value;
+                name = value;
             }
         }
 

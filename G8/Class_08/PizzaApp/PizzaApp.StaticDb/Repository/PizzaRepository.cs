@@ -1,44 +1,45 @@
 ﻿using PizzaApp.Application.Repository;
 using PizzaApp.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaApp.StaticDb.Repository
 {
     public class PizzaRepository
         : IRepository<Pizza>
     {
+        public Pizza GetById(int id)
+        {
+            return PizzaAppDb.Pizzas.FirstOrDefault(x => x.Id == id);
+        }
+
         public Pizza Create(Pizza entity)
         {
-            throw new NotImplementedException();
+            var lastId = PizzaAppDb.Pizzas.LastOrDefault()?.Id ?? 0;
+            entity.Id = ++lastId;
+            PizzaAppDb.Pizzas.Add(entity);
+            return entity;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var pizza = GetById(id);
+            PizzaAppDb.Pizzas.Remove(pizza);
         }
 
         public void DeleteAll()
         {
-            throw new NotImplementedException();
+            PizzaAppDb.Pizzas.Clear();
         }
 
         public IQueryable<Pizza> GetAll()
         {
-            throw new NotImplementedException();
+            return PizzaAppDb.Pizzas.AsQueryable();
         }
 
-        public Pizza GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public void Update(Pizza entity)
         {
-            throw new NotImplementedException();
+            var pizza = GetById(entity.Id);
+            pizza = entity;
         }
     }
 }

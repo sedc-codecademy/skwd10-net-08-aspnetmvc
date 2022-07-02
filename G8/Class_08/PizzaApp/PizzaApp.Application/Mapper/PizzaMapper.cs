@@ -11,7 +11,8 @@ namespace PizzaApp.Application.Mapper
             {
                 Id = pizza.Id,
                 Name = pizza.Name,
-                Size = pizza.Size
+                Size = pizza.Size,
+                Price = pizza.Price
             };
         }
 
