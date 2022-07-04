@@ -1,4 +1,6 @@
-﻿namespace PizzaWebApp.Models
+﻿using System.Globalization;
+
+namespace PizzaWebApp.Models
 {
     public class MenuItemViewModel
     {
@@ -6,5 +8,10 @@
         public PizzaViewModel Pizza { get; set; }
         public SizeViewModel Size { get; set; }
         public decimal Price { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Pizza.Name} ({Size.Name}) [{Price.ToString("C", CultureInfo.CreateSpecificCulture("mk-MK"))}]";
+        }
     }
 }
