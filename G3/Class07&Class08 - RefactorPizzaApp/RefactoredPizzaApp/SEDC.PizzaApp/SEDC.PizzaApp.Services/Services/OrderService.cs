@@ -1,6 +1,8 @@
 ﻿using SEDC.PizzaApp.DataAccess.Repositories.Interfaces;
 using SEDC.PizzaApp.Domain.Models;
+using SEDC.PizzaApp.Mappers.Extensions;
 using SEDC.PizzaApp.Services.Services.Interfaces;
+using SEDC.PizzaApp.ViewModels.OrderViewModels;
 
 namespace SEDC.PizzaApp.Services.Services
 {
@@ -13,9 +15,9 @@ namespace SEDC.PizzaApp.Services.Services
             _orderRepository = orderRepository;
         }
 
-        public List<Order> GetAllOrders()
+        public List<OrderListViewModel> GetAllOrders()
         {
-            return _orderRepository.GetAll();
+            return _orderRepository.GetAll().Select(x => x.MapToOrderListViewModel()).ToList();
         }
 
         public Order GetOrderById(int id)
