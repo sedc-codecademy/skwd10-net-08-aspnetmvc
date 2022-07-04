@@ -26,7 +26,7 @@
                         @foreach(var item in Model[i].Items)
                         {
                             <li>
-                                @item.MenuItem.ToString();
+                                @item.MenuItem.ToString() x @item.Quantity
                             </li>
                         }
                     </ul>
