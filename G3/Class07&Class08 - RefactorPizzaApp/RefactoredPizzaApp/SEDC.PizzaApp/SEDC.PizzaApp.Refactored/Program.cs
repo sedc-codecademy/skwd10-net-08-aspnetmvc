@@ -13,6 +13,8 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPizzaService, PizzaService>();
 builder.Services.AddTransient<IPizzaRepository, PizzaRepository>();
 builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
+
 
 
 

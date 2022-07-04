@@ -7,5 +7,6 @@ namespace SEDC.PizzaApp.Services.Services.Interfaces
     {
         List<OrderListViewModel> GetAllOrders();
         Order GetOrderById(int id);
+        void CreateOrder(OrderViewModel model);
     }
 }

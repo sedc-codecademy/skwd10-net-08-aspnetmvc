@@ -18,5 +18,16 @@ namespace SEDC.PizzaApp.Refactored.Controllers
             List<OrderListViewModel> orderListViewModel = _orderService.GetAllOrders();
             return View(orderListViewModel);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(OrderViewModel orderViewModel)
+        {
+            return View();
+        }
     }
 }
