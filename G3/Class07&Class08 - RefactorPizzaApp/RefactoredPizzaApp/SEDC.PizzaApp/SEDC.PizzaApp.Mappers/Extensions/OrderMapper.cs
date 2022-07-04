@@ -20,5 +20,17 @@ namespace SEDC.PizzaApp.Mappers.Extensions
                 PizzaNames = order.PizzaOrders.Select(x => x.Pizza.Name).ToList()
             };
         }
+
+        public static Order MapToOrder(this OrderViewModel orderViewModel)
+        {
+            return new Order
+            {
+                Id = orderViewModel.Id,
+                IsDelivered = orderViewModel.IsDelivered,
+                PaymentMethod = orderViewModel.PaymentMethod,
+                PizzaOrders = new List<PizzaOrder>(),
+                UserId = orderViewModel.UserId
+            };
+        }
     }
 }
