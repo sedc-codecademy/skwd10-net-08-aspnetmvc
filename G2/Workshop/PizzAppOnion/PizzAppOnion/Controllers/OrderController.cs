@@ -18,24 +18,24 @@ namespace PizzAppOnion.API.Controllers
         }
 
         // GET: OrderController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            IEnumerable<OrderViewModel> orderListViewModel = _orderService.GetAllOrders();
+            IEnumerable<OrderViewModel> orderListViewModel = await _orderService.GetAllOrders();
 
             return View(orderListViewModel);
         }
 
         // GET: OrderController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            OrderViewModel order = _orderService.GetOrder(id);
+            OrderViewModel order = await _orderService.GetOrder(id);
             return View(order);
         }
 
         // GET: OrderController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.Pizzas = _pizzaService.GetAllPizzas();
+            ViewBag.Pizzas = await _pizzaService.GetAllPizzasAsync();
             OrderViewModel orderViewModel = new();
             return View(orderViewModel);
         }
@@ -43,18 +43,18 @@ namespace PizzAppOnion.API.Controllers
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(OrderViewModel order)
+        public async Task<ActionResult> Create(OrderViewModel order)
         {
-            _orderService.CreateOrder(order);
+            await _orderService.CreateOrderAsync(order);
 
             return RedirectToAction(nameof(Index));
         }
 
         // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Pizzas = _pizzaService.GetAllPizzas();
-            OrderViewModel order = _orderService.GetOrder(id);
+            ViewBag.Pizzas = await _pizzaService.GetAllPizzasAsync();
+            OrderViewModel order = await _orderService.GetOrder(id);
             return View(order);
         }
 
@@ -68,9 +68,9 @@ namespace PizzAppOnion.API.Controllers
         }
 
         // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            OrderViewModel order = _orderService.GetOrder(id);
+            OrderViewModel order = await _orderService.GetOrder(id);
             return View(order);
         }
 

@@ -2,6 +2,7 @@
 using PizzAppOnion.Contracts.ViewModels.Order;
 using PizzAppOnion.Domain.Entities;
 using PizzAppOnion.Domain.Repositories;
+using PizzAppOnion.Domain.UnitOfWork;
 using PizzAppOnion.Services.Mappers;
 
 namespace PizzAppOnion.Services
@@ -10,17 +11,20 @@ namespace PizzAppOnion.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IPizzaRepository _pizzaRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public OrderService(IOrderRepository orderRepository,
-                            IPizzaRepository pizzaRepository)
+                            IPizzaRepository pizzaRepository,
+                            IUnitOfWork unitOfWork)
         {
             _orderRepository = orderRepository;
             _pizzaRepository = pizzaRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public void CreateOrder(OrderViewModel order)
+        public async Task CreateOrderAsync(OrderViewModel order)
         {
-            var pizzas = _pizzaRepository.GetPizzas(order.Pizzas);
+            var pizzas = await _pizzaRepository.GetPizzasAsync(order.Pizzas);
 
             Order createdOrder = new()
             {
@@ -29,6 +33,8 @@ namespace PizzAppOnion.Services
             };
 
             _orderRepository.Insert(createdOrder);
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public void DeleteOrder(int id)
@@ -36,25 +42,25 @@ namespace PizzAppOnion.Services
             _orderRepository.Delete(id);
         }
 
-        public IReadOnlyList<OrderViewModel> GetAllOrders()
+        public async Task<IReadOnlyList<OrderViewModel>> GetAllOrders()
         {
-            IReadOnlyList<Order> dbOrders = _orderRepository.GetAllOrders();
+            IReadOnlyList<Order> dbOrders = await _orderRepository.GetAllOrdersAsync();
 
             return dbOrders.Select(x => x.ToOrderViewModel()).ToArray();
         }
 
-        public OrderViewModel GetOrder(int id)
+        public async Task<OrderViewModel> GetOrder(int id)
         {
-            Order order = GetOrderById(id);
+            Order order = await GetOrderById(id);
 
             return order.ToOrderViewModel();
         }
 
-        public void UpdateOrder(int id, OrderViewModel order)
+        public async Task UpdateOrder(int id, OrderViewModel order)
         {
-            Order existingOrder = GetOrderById(id);
+            Order existingOrder = await GetOrderById(id);
 
-            var pizzas = _pizzaRepository.GetPizzas(order.Pizzas);
+            var pizzas = await _pizzaRepository.GetPizzasAsync(order.Pizzas);
 
             existingOrder.CreatedAt = order.CreatedAt;
             existingOrder.Pizzas = pizzas.ToList();
@@ -62,9 +68,9 @@ namespace PizzAppOnion.Services
             _orderRepository.Update(existingOrder);
         }
 
-        private Order GetOrderById(int id)
+        private async Task<Order> GetOrderById(int id)
         {
-            Order order = _orderRepository.GetOrder(id);
+            Order order = await _orderRepository.GetOrderAsync(id);
 
             if (order is null)
             {

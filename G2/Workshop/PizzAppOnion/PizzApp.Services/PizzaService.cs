@@ -32,9 +32,9 @@ namespace PizzAppOnion.Services
             _pizzaRepository.Delete(id);
         }
 
-        public IReadOnlyList<PizzaViewModel> GetAllPizzas()
+        public async Task<IReadOnlyList<PizzaViewModel>> GetAllPizzasAsync()
         {
-            IReadOnlyList<Pizza> pizzas = _pizzaRepository.GetAllPizzas();
+            IReadOnlyList<Pizza> pizzas = await _pizzaRepository.GetAllPizzasAsync();
 
             return pizzas.Select(x => x.ToPizzaViewModel()).ToArray();
         }

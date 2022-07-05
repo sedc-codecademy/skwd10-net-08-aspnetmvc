@@ -1,9 +1,7 @@
 ﻿namespace PizzAppOnion.Domain.Entities
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
-
         public List<Pizza> Pizzas { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -11,6 +9,11 @@
         public decimal CalculateTotalPrice()
         {
             return Pizzas.Sum(x => x.Price);
+        }
+
+        public Order()
+        {
+            Pizzas = new List<Pizza>();
         }
     }
 }

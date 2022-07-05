@@ -4,9 +4,9 @@ namespace PizzAppOnion.Domain.Repositories
 {
     public interface IOrderRepository
     {
-        IReadOnlyList<Order> GetAllOrders();
+        Task<IReadOnlyList<Order>> GetAllOrdersAsync();
 
-        Order GetOrder(int id);
+        Task<Order> GetOrderAsync(int id);
         
         void Insert(Order createdOrder);
         
