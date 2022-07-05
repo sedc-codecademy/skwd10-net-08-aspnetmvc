@@ -1,4 +1,6 @@
-﻿namespace PizzaWebApp.DomainModels
+﻿using System.Globalization;
+
+namespace PizzaWebApp.DomainModels
 {
     public class MenuItem
     {
@@ -18,6 +20,11 @@
             Pizza = pizza;
             Size = size;
             Price = price;
+        }
+
+        public override string ToString()
+        {
+            return $"{Pizza.Name} ({Size.Name}) [{Price.ToString("C", CultureInfo.CreateSpecificCulture("mk-MK"))}]";
         }
     }
 }
