@@ -18,7 +18,7 @@ namespace SEDC.PizzaApp.DataAccess.Repositories
 
         public List<User> GetAll()
         {
-            throw new NotImplementedException();
+            return StaticDb.Users;
         }
 
         public User GetById(int id)
