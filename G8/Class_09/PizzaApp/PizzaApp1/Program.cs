@@ -13,8 +13,8 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 
 // Add services to the container.
 builder.Services.AddMvc().AddNewtonsoftJson();
-builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
-builder.Services.AddScoped<IRepository<Pizza>, PizzaRepository>();
+builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
+builder.Services.AddSingleton<IRepository<Pizza>, PizzaRepository>();
 builder.Services.AddSingleton<IRepository<User>, UserRepository>();
 //builder.Services.AddSingleton<IRepository<Order>, OrderEFRepository>();
 
@@ -22,8 +22,8 @@ builder.Services.AddSingleton<IOrderService, OrderService>();
 builder.Services.AddSingleton<IPizzaService, PizzaService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-builder.Services.AddDbContext<ApplicationDbContext>(ops =>
-    ops.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+builder.Services.AddDbContext<ApplicationDbContext>(ops => 
+ops.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

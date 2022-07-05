@@ -25,7 +25,7 @@
 
         public bool? IsDelivered { get; private set; }
 
-        public decimal Price => Pizzas.Sum(x => x.Price);
+        public double Price => Pizzas.Sum(x => x.Price);
 
         public bool CanBeDelivered { get; private set; }
 

@@ -10,6 +10,6 @@ namespace PizzaApp.Application.ViewModel.Pizza
 
         public PizzaSize Size { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
     }
 }

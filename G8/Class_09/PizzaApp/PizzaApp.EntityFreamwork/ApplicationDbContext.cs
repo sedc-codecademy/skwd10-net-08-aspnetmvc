@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PizzaApp.Domain.Models;
-
+using PizzaApp.EntityFreamwork.Configuration;
 
 namespace PizzaApp.EntityFreamwork
 {
@@ -16,5 +16,11 @@ namespace PizzaApp.EntityFreamwork
         public DbSet<Pizza> Pizzas { get; set; }
 
         public DbSet<Order> Orders { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>().Ignore(x => x.Price);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        }
     }
 }

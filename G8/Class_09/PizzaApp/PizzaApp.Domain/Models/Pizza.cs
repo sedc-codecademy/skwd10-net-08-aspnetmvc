@@ -5,25 +5,13 @@ namespace PizzaApp.Domain.Models
     public class Pizza
         : IEntity
     {
-        public Pizza()
+        private Pizza()
         {
 
         }
-        public Pizza(string name, decimal price, IEnumerable<Topping> toppings, PizzaSize size)
+        public Pizza(string name, double price, PizzaSize size)
         {
             if(name is null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            Name = name;
-            Price = price;
-            Toppings = toppings;
-            Size = size;
-        }
-
-        public Pizza(string name, decimal price, PizzaSize size)
-        {
-            if (name is null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -37,8 +25,10 @@ namespace PizzaApp.Domain.Models
 
         public string Name { get; set; } = string.Empty;
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public PizzaSize Size { get; set; }
+
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
