@@ -45,5 +45,10 @@ namespace PizzaApp.StaticDb.Repository
                 user = entity;
             }
         }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

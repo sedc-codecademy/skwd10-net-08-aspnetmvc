@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PizzaApp.Application.Repository;
 using PizzaApp.Application.Services;
@@ -5,27 +6,32 @@ using PizzaApp.Application.Services.ExternalServices;
 using PizzaApp.Application.Services.Implementation;
 using PizzaApp.Domain.Models;
 using PizzaApp.EntityFreamwork;
+using PizzaApp.EntityFreamwork.Repository;
 using PizzaApp.Infrastracute;
-using PizzaApp.StaticDb.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 // Add services to the container.
 builder.Services.AddMvc().AddNewtonsoftJson();
-builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
-builder.Services.AddSingleton<IRepository<Pizza>, PizzaRepository>();
-builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+//builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
+//builder.Services.AddSingleton<IRepository<Pizza>, PizzaRepository>();
+//builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<User>, BaseRepository<User>>();
+builder.Services.AddScoped<IRepository<Order>, BaseRepository<Order>>();
+builder.Services.AddScoped<IRepository<Pizza>, BaseRepository<Pizza>>();
 //builder.Services.AddSingleton<IRepository<Order>, OrderEFRepository>();
 
-builder.Services.AddSingleton<IOrderService, OrderService>();
-builder.Services.AddSingleton<IPizzaService, PizzaService>();
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPizzaService, PizzaService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(ops => 
 ops.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 var app = builder.Build();
-
+// add migration
+// update-database
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

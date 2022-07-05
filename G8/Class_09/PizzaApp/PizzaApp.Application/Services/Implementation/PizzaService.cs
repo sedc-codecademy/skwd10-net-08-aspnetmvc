@@ -29,12 +29,16 @@ namespace PizzaApp.Application.Services
             var pizza = model.ToPizza();
 
             var saved = repository.Create(pizza);
+            repository.Commit();
+
             return saved.ToPizzaViewModel();
         }
 
         public void Delete(int id)
         {
             repository.Delete(id);
+            repository.Commit();
+
         }
 
         public PizzaViewModel EditPizza(PizzaViewModel model, int id)
@@ -48,6 +52,7 @@ namespace PizzaApp.Application.Services
             var toSave = pizza.Edit(model);
 
             repository.Update(toSave);
+            repository.Commit();
 
             return toSave.ToPizzaViewModel();
         }

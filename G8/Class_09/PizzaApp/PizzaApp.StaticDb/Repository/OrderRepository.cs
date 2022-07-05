@@ -45,5 +45,10 @@ namespace PizzaApp.StaticDb.Repository
             var order = GetById(entity.Id);
             order = entity;
         }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
