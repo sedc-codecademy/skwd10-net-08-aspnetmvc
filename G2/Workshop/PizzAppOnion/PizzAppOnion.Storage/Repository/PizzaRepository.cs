@@ -1,11 +1,17 @@
-﻿using PizzAppOnion.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PizzAppOnion.Domain.Entities;
 using PizzAppOnion.Domain.Repositories;
 using PizzAppOnion.Storage.Database;
+using PizzAppOnion.Storage.Database.Context;
 
-namespace PizzAppOnion.Storage.Repository
+namespace PizzAppOnion.Storage.Repository.Repository
 {
-    public class PizzaRepository : IPizzaRepository
+    public class PizzaRepository : RepositoryBase<Pizza>, IPizzaRepository
     {
+        public PizzaRepository(IPizzaDbContext pizzaDbContext) : base(pizzaDbContext)
+        {
+        }
+
         public void Delete(int id)
         {
             Pizza pizza = GetPizza(id);
@@ -18,9 +24,9 @@ namespace PizzAppOnion.Storage.Repository
             PizzaDatabase.PIZZAS.Remove(pizza);
         }
 
-        public IReadOnlyList<Pizza> GetAllPizzas()
+        public async Task<IReadOnlyList<Pizza>> GetAllPizzasAsync()
         {
-            return PizzaDatabase.PIZZAS;
+            return await GetAll().ToArrayAsync();
         }
 
         public Pizza GetPizza(int id)
@@ -28,9 +34,9 @@ namespace PizzAppOnion.Storage.Repository
             return PizzaDatabase.PIZZAS.SingleOrDefault(x => x.Id == id);
         }
 
-        public IReadOnlyList<Pizza> GetPizzas(int[] pizzaIds)
+        public async Task<IReadOnlyList<Pizza>> GetPizzasAsync(int[] pizzaIds)
         {
-            return PizzaDatabase.PIZZAS.Where(x => pizzaIds.Contains(x.Id)).ToArray();
+            return await GetAll().Where(x => pizzaIds.Contains(x.Id)).ToArrayAsync();
         }
 
         public void Insert(Pizza newPizza)

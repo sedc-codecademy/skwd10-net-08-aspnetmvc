@@ -4,7 +4,7 @@ namespace PizzAppOnion.Contracts.Services
 {
     public interface IPizzaService
     {
-        IReadOnlyList<PizzaViewModel> GetAllPizzas();
+        Task<IReadOnlyList<PizzaViewModel>> GetAllPizzasAsync();
 
         PizzaViewModel GetPizza(int id);
 

@@ -4,11 +4,11 @@ namespace PizzAppOnion.Domain.Repositories
 {
     public interface IPizzaRepository
     {
-        IReadOnlyList<Pizza> GetAllPizzas();
+        Task<IReadOnlyList<Pizza>> GetAllPizzasAsync();
 
         Pizza GetPizza(int id);
 
-        IReadOnlyList<Pizza> GetPizzas(int[] pizzaIds);
+        Task<IReadOnlyList<Pizza>> GetPizzasAsync(int[] pizzaIds);
         void Insert(Pizza newPizza);
         void Delete(int id);
         void Update(Pizza existingPizza);

@@ -13,9 +13,9 @@ namespace PizzAppOnion.API.Controllers
             _pizzaService = pizzaService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            IEnumerable<PizzaViewModel> pizzas = _pizzaService.GetAllPizzas();
+            IEnumerable<PizzaViewModel> pizzas = await _pizzaService.GetAllPizzasAsync();
 
             return View(pizzas);
         }
