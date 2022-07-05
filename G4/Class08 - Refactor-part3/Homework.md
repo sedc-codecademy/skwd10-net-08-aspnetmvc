@@ -12,17 +12,13 @@ This prototype needs to have the following functions:
   * Show a menu of all available burgers
   * Edit every burger on the menu
   * Add a new burger to the menu
-  * Delete a burger from the menu
+  * Delete a burger from the menu 
 * Orders
   * Make an order
-  * Edit an order
-  * Delete an order
+  * Edit an order (Skip Edit action for now, unless you want it as an exercise.)
+  * Delete an order 
   * List all orders
 * Home
-  * Show the most popular burger ( The burger that has been ordered the most )
-  * Show how many orders have the app serviced so far
-  * Show an average price of an order
-  * List of all locations of the burger place
   * Navigation to Burgers Menu, Orders and About Us page
     * About Us page is just a page with some text about the burger place
 
@@ -37,22 +33,15 @@ Users will not be part of the prototype at this moment. Here is some business do
   * IsVegan
   * HasFries
 * Order
-  * FullName
+  * FullName (we will keep an information about the full name of the user who made the order)
   * Address
   * IsDelivered
-  * Burgers
+  * Burger
   * Location ( String )
+  
+## 1. Refactor the app using N-tier (3-tier) architecture
+## 2. Use the Repository pattern
+## 3. Use Dependency Injection
+## 4. Use appropriate mappers and view models
+## Skip Edit action for now, unless you want it as an exercise. 
 
-## Bonus
-
-* Change location from string to model
-* Add locations section
-  * List all locations of burger places
-  * Add new location
-  * Edit location
-  * Delete location
-* Location Model
-  * Name
-  * Address
-  * OpensAt
-  * ClosesAt
