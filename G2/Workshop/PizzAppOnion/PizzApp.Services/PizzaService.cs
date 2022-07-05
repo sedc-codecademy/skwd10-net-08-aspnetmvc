@@ -15,11 +15,58 @@ namespace PizzAppOnion.Services
             _pizzaRepository = pizzaRepository;
         }
 
-        public IReadOnlyList<PizzaViewModel> GetPizzas()
+        public void CreatePizza(PizzaViewModel pizza)
+        {
+            Pizza newPizza = new Pizza()
+            {
+                Name = pizza.Name,
+                Price = pizza.Price,
+                IsOnPromotion = pizza.IsOnPromotion
+            };
+
+            _pizzaRepository.Insert(newPizza);
+        }
+
+        public void DeletePizza(int id)
+        {
+            _pizzaRepository.Delete(id);
+        }
+
+        public IReadOnlyList<PizzaViewModel> GetAllPizzas()
         {
             IReadOnlyList<Pizza> pizzas = _pizzaRepository.GetAllPizzas();
 
             return pizzas.Select(x => x.ToPizzaViewModel()).ToArray();
+        }
+
+        public PizzaViewModel GetPizza(int id)
+        {
+            Pizza pizza = GetPizzaById(id);
+
+            return pizza.ToPizzaViewModel();
+        }
+
+        public void UpdatePizza(int id, PizzaViewModel pizza)
+        {
+            Pizza existingPizza = GetPizzaById(id);
+
+            existingPizza.Price = pizza.Price;
+            existingPizza.IsOnPromotion = pizza.IsOnPromotion;
+            existingPizza.Name = pizza.Name;
+
+            _pizzaRepository.Update(existingPizza);
+        }
+
+        private Pizza GetPizzaById(int id)
+        {
+            Pizza pizza = _pizzaRepository.GetPizza(id);
+
+            if (pizza is null)
+            {
+                throw new Exception($"Pizza with id {id} not found");
+            }
+
+            return pizza;
         }
     }
 }

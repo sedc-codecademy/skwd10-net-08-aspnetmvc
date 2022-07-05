@@ -35,7 +35,7 @@ namespace PizzAppOnion.API.Controllers
         // GET: OrderController/Create
         public ActionResult Create()
         {
-            ViewBag.Pizzas = _pizzaService.GetPizzas();
+            ViewBag.Pizzas = _pizzaService.GetAllPizzas();
             OrderViewModel orderViewModel = new();
             return View(orderViewModel);
         }
@@ -53,7 +53,7 @@ namespace PizzAppOnion.API.Controllers
         // GET: OrderController/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.Pizzas = _pizzaService.GetPizzas();
+            ViewBag.Pizzas = _pizzaService.GetAllPizzas();
             OrderViewModel order = _orderService.GetOrder(id);
             return View(order);
         }

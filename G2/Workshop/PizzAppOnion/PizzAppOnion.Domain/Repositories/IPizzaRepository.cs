@@ -9,5 +9,8 @@ namespace PizzAppOnion.Domain.Repositories
         Pizza GetPizza(int id);
 
         IReadOnlyList<Pizza> GetPizzas(int[] pizzaIds);
+        void Insert(Pizza newPizza);
+        void Delete(int id);
+        void Update(Pizza existingPizza);
     }
 }

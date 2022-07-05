@@ -30,5 +30,10 @@ namespace PizzAppOnion.Storage.Database
         {
             return (ORDERS.OrderByDescending(x => x.Id).FirstOrDefault()?.Id ?? 0) + 1;
         }
+
+        public static int GetNextPizzaId()
+        {
+            return (PIZZAS.OrderByDescending(x => x.Id).FirstOrDefault()?.Id ?? 0) + 1;
+        }
     }
 }
