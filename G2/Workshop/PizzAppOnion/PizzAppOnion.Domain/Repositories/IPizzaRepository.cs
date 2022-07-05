@@ -7,5 +7,7 @@ namespace PizzAppOnion.Domain.Repositories
         IReadOnlyList<Pizza> GetAllPizzas();
 
         Pizza GetPizza(int id);
+
+        IReadOnlyList<Pizza> GetPizzas(int[] pizzaIds);
     }
 }

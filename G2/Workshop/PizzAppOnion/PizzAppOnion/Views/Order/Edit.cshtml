@@ -28,9 +28,9 @@
                 <span asp-validation-for="TotalPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PizzaId" class="control-label"></label>
-                <select asp-for="PizzaId" asp-items="@(new SelectList(ViewBag.Pizzas, "Id", "Name"))" class="form-control"></select>
-                <span asp-validation-for="PizzaId" class="text-danger"></span>
+                <label asp-for="Pizzas" class="control-label"></label>
+                <select asp-for="Pizzas" asp-items="@(new SelectList(ViewBag.Pizzas, "Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="Pizzas" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

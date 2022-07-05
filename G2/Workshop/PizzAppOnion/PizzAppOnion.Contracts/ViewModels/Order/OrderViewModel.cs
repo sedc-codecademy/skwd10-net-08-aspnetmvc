@@ -14,6 +14,6 @@ namespace PizzAppOnion.Contracts.ViewModels.Order
         public decimal TotalPrice { get; set; }
 
         [Display(Name = "Pizza")]
-        public int PizzaId { get; set; }
+        public int[] Pizzas { get; set; }
     }
 }

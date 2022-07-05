@@ -15,5 +15,10 @@ namespace PizzAppOnion.Storage.Repository
         {
             return PizzaDatabase.PIZZAS.SingleOrDefault(x => x.Id == id);
         }
+
+        public IReadOnlyList<Pizza> GetPizzas(int[] pizzaIds)
+        {
+            return PizzaDatabase.PIZZAS.Where(x => pizzaIds.Contains(x.Id)).ToArray();
+        }
     }
 }

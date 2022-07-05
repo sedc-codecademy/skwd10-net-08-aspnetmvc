@@ -20,15 +20,12 @@ namespace PizzAppOnion.Services
 
         public void CreateOrder(OrderViewModel order)
         {
-            Pizza pizza = _pizzaRepository.GetPizza(order.PizzaId);
+            var pizzas = _pizzaRepository.GetPizzas(order.Pizzas);
 
             Order createdOrder = new()
             {
                 CreatedAt = order.CreatedAt,
-                Pizzas = new List<Pizza>()
-                {
-                    pizza
-                }
+                Pizzas = pizzas.ToList()
             };
 
             _orderRepository.Insert(createdOrder);
@@ -57,10 +54,10 @@ namespace PizzAppOnion.Services
         {
             Order existingOrder = GetOrderById(id);
 
-            Pizza pizza = _pizzaRepository.GetPizza(order.PizzaId);
+            var pizzas = _pizzaRepository.GetPizzas(order.Pizzas);
 
             existingOrder.CreatedAt = order.CreatedAt;
-            existingOrder.Pizzas = new List<Pizza>() { pizza };
+            existingOrder.Pizzas = pizzas.ToList();
 
             _orderRepository.Update(existingOrder);
         }
