@@ -8,10 +8,13 @@ namespace PizzAppOnion.API.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly IPizzaService _pizzaService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,
+                               IPizzaService pizzaService)
         {
             _orderService = orderService;
+            _pizzaService = pizzaService;
         }
 
         // GET: OrderController
@@ -25,55 +28,50 @@ namespace PizzAppOnion.API.Controllers
         // GET: OrderController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            OrderViewModel order = _orderService.GetOrder(id);
+            return View(order);
         }
 
         // GET: OrderController/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Pizzas = _pizzaService.GetPizzas();
+            OrderViewModel orderViewModel = new();
+            return View(orderViewModel);
         }
 
         // POST: OrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(OrderViewModel order)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _orderService.CreateOrder(order);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: OrderController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ViewBag.Pizzas = _pizzaService.GetPizzas();
+            OrderViewModel order = _orderService.GetOrder(id);
+            return View(order);
         }
 
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, OrderViewModel order)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _orderService.UpdateOrder(id, order);
+            return RedirectToAction("Edit", id);
         }
 
         // GET: OrderController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            OrderViewModel order = _orderService.GetOrder(id);
+            return View(order);
         }
 
         // POST: OrderController/Delete/5
@@ -81,14 +79,8 @@ namespace PizzAppOnion.API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _orderService.DeleteOrder(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -9,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IOrderService, OrderService>()
-                .AddScoped<IOrderRepository, OrderRepository>();
+                .AddScoped<IOrderRepository, OrderRepository>()
+                .AddScoped<IPizzaService, PizzaService>()
+                .AddScoped<IPizzaRepository, PizzaRepository>();
 
 var app = builder.Build();
 

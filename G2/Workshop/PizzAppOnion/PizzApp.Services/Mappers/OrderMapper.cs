@@ -11,7 +11,8 @@ namespace PizzAppOnion.Services.Mappers
             {
                 Id = order.Id,
                 CreatedAt = order.CreatedAt,
-                TotalPrice = order.CalculateTotalPrice()
+                TotalPrice = order.CalculateTotalPrice(),
+                PizzaId = order.Pizzas.FirstOrDefault().Id
             };
         }
     }

@@ -1,6 +1,9 @@
 ﻿namespace PizzAppOnion.Contracts.ViewModels.Pizza
 {
-    internal class PizzaViewModel
+    public class PizzaViewModel
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
     }
 }
