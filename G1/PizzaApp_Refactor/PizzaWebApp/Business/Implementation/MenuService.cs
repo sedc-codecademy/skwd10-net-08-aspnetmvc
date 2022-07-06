@@ -1,6 +1,6 @@
 ﻿using Business.Abstraction;
+using DataAccess.Abstraction;
 using DataAccess.Helpers;
-using DataAccess.Storage;
 using DomainModels;
 using Mappers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,15 +10,26 @@ namespace Business.Implementation
 {
     public class MenuService : IMenuService
     {
+        private readonly IRepository<MenuItem> _menuItemRepository;
+        private readonly IRepository<Size> _sizeRepository;
+        private readonly IRepository<Pizza> _pizzaRepository;
+
+        public MenuService(IRepository<MenuItem> menuItemRepository, IRepository<Size> sizeRepository, IRepository<Pizza> pizzaRepository)
+        {
+            _menuItemRepository = menuItemRepository;
+            _sizeRepository = sizeRepository;
+            _pizzaRepository = pizzaRepository;
+        }
+
         public List<MenuItemViewModel> GetAll()
         {
-            var menu = PizzaDb.MenuItems.Select(x => x.ToViewModel()).OrderBy(x => x.Pizza.Name).ThenBy(x => x.Size.Description).ToList();
+            var menu = _menuItemRepository.GetAll().Select(x => x.ToViewModel()).OrderBy(x => x.Pizza.Name).ThenBy(x => x.Size.Description).ToList();
             return menu;
         }
 
         public MenuItemCreateEditViewModel GetCreateEditViewModelById(int id)
         {
-            var item = PizzaDb.MenuItems.FirstOrDefault(x => x.Id == id);
+            var item = _menuItemRepository.GetById(id);
 
             if (item == null)
             {
@@ -43,14 +54,14 @@ namespace Business.Implementation
                 throw new Exception($"All properties are required.");
             }
 
-            var selectedSize = PizzaDb.Sizes.FirstOrDefault(x => x.Id == model.SelectedSizeId);
+            var selectedSize = _sizeRepository.GetById(model.SelectedSizeId);
 
             if (selectedSize == null)
             {
                 throw new Exception($"Selected size does not exist.");
             }
 
-            var selectedPizza = PizzaDb.Pizzas.FirstOrDefault(x => x.Id == model.SelectedPizzaId);
+            var selectedPizza = _pizzaRepository.GetById(model.SelectedPizzaId);
 
             if (selectedPizza == null)
             {
@@ -62,7 +73,7 @@ namespace Business.Implementation
                 throw new Exception("Price should be larger than 0.");
             }
 
-            if (PizzaDb.MenuItems.Any(x => x.Id != model.Id && x.Pizza.Id == model.SelectedPizzaId && x.Size.Id == model.SelectedSizeId))
+            if (_menuItemRepository.GetAll().Any(x => x.Id != model.Id && x.Pizza.Id == model.SelectedPizzaId && x.Size.Id == model.SelectedSizeId))
             {
                 throw new Exception($"This menu item already exist.");
             }
@@ -71,42 +82,40 @@ namespace Business.Implementation
             {
                 var menuItem = new MenuItem(CommonHelper.GetRandomId(), selectedPizza, selectedSize, model.Price);
 
-                PizzaDb.MenuItems.Add(menuItem);
+                _menuItemRepository.Insert(menuItem);
 
                 return;
             }
 
-            var existingMenuItem = PizzaDb.MenuItems.FirstOrDefault(x => x.Id == model.Id);
+            var existingMenuItem = _menuItemRepository.GetById(model.Id);
 
             if (existingMenuItem == null)
             {
                 throw new Exception($"Menu item does not exist.");
             }
-
-            PizzaDb.MenuItems.Remove(existingMenuItem);
 
             existingMenuItem.Pizza = selectedPizza;
             existingMenuItem.Size = selectedSize;
             existingMenuItem.Price = model.Price;
 
-            PizzaDb.MenuItems.Add(existingMenuItem);
+            _menuItemRepository.Update(existingMenuItem);
         }
 
         public void Delete(int id)
         {
-            var existingMenuItem = PizzaDb.MenuItems.FirstOrDefault(x => x.Id == id);
+            var existingMenuItem = _menuItemRepository.GetById(id);
 
             if (existingMenuItem == null)
             {
                 throw new Exception($"Menu item does not exist.");
             }
 
-            PizzaDb.MenuItems.Remove(existingMenuItem);
+            _menuItemRepository.DeleteById(existingMenuItem.Id);
         }
 
         public List<SelectListItem> GetMenuItemsSelectList()
         {
-            return PizzaDb.MenuItems.Select(x => new SelectListItem(x.ToString(), x.Id.ToString())).ToList();
+            return _menuItemRepository.GetAll().Select(x => new SelectListItem(x.ToString(), x.Id.ToString())).ToList();
         }
     }
 }

@@ -1,24 +1,33 @@
 ﻿using Business.Abstraction;
 using DataAccess.Helpers;
-using DataAccess.Storage;
 using DomainModels;
 using Mappers;
 using ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DataAccess.Abstraction;
 
 namespace Business.Implementation
 {
     public class PizzaService : IPizzaService
     {
+        private readonly IRepository<Pizza> _pizzaRepository;
+        private readonly IRepository<MenuItem> _menuItemRepository;
+
+        public PizzaService(IRepository<Pizza> pizzaRepository, IRepository<MenuItem> menuItemRepository)
+        {
+            _pizzaRepository = pizzaRepository;
+            _menuItemRepository = menuItemRepository;
+        }
+
         public List<PizzaViewModel> GetAll()
         {
-            var pizzas = PizzaDb.Pizzas.Select(x => x.ToViewModel()).OrderBy(x => x.Name).ToList();
+            var pizzas = _pizzaRepository.GetAll().Select(x => x.ToViewModel()).OrderBy(x => x.Name).ToList();
             return pizzas;
         }
 
         public PizzaViewModel GetById(int id)
         {
-            var pizza = PizzaDb.Pizzas.FirstOrDefault(x => x.Id == id);
+            var pizza = _pizzaRepository.GetById(id);
 
             if (pizza == null)
             {
@@ -37,7 +46,7 @@ namespace Business.Implementation
                 throw new Exception($"All properties are required.");
             }
 
-            if (PizzaDb.Pizzas.Any(x => x.Name.ToLower() == model.Name.ToLower() && x.Id != model.Id))
+            if (_pizzaRepository.GetAll().Any(x => x.Name.ToLower() == model.Name.ToLower() && x.Id != model.Id))
             {
                 throw new Exception($"Pizza with the name {model.Name} already exists");
             }
@@ -46,49 +55,47 @@ namespace Business.Implementation
             {
                 var pizza = new Pizza(CommonHelper.GetRandomId(), model.Name, model.Description, model.ImageUrl);
 
-                PizzaDb.Pizzas.Add(pizza);
+                _pizzaRepository.Insert(pizza);
 
                 return;
             }
 
-            var existingPizza = PizzaDb.Pizzas.FirstOrDefault(x => x.Id == model.Id);
+            var existingPizza = _pizzaRepository.GetById(model.Id);
 
             if (existingPizza == null)
             {
                 throw new Exception($"Pizza with id {model.Id} does not exist");
             }
 
-            PizzaDb.Pizzas.Remove(existingPizza);
-
             existingPizza.Name = model.Name;
             existingPizza.Description = model.Description;
             existingPizza.ImageUrl = model.ImageUrl;
 
-            PizzaDb.Pizzas.Add(existingPizza);
+            _pizzaRepository.Update(existingPizza);
         }
 
         public void Delete(int id)
         {
-            var existingPizza = PizzaDb.Pizzas.FirstOrDefault(x => x.Id == id);
+            var existingPizza = _pizzaRepository.GetById(id);
 
             if (existingPizza == null)
             {
                 throw new Exception($"Pizza with id {id} does not exist");
             }
 
-            var menuItems = PizzaDb.MenuItems.Where(x => x.Pizza.Id == id).ToList();
+            var menuItems = _menuItemRepository.GetAll().Where(x => x.Pizza.Id == id).ToList();
 
             foreach (var menuItem in menuItems)
             {
-                PizzaDb.MenuItems.Remove(menuItem);
+                _menuItemRepository.DeleteById(menuItem.Id);
             }
 
-            PizzaDb.Pizzas.Remove(existingPizza);
+            _pizzaRepository.DeleteById(existingPizza.Id);
         }
 
         public List<SelectListItem> GetPizzasSelectList()
         {
-            return PizzaDb.Pizzas.Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+            return _pizzaRepository.GetAll().Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
         }
     }
 }
