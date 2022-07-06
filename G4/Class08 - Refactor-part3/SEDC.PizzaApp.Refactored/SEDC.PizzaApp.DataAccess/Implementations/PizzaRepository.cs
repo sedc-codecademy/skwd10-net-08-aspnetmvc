@@ -23,8 +23,8 @@ namespace SEDC.PizzaApp.DataAccess.Implementations
 
         public int Insert(Pizza entity)
         {
-            StaticDb.UserId++;
-            entity.Id = StaticDb.UserId;
+            StaticDb.PizzaId++;
+            entity.Id = StaticDb.PizzaId;
             //send the record to the DB
             StaticDb.Pizzas.Add(entity);
             return entity.Id;
