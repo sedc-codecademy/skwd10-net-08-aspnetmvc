@@ -27,6 +27,7 @@ namespace PizzaApp.Application.Services.Implementation
             var user = create.ToUser();
 
             var createdUser = userRepository.Create(user);
+            userRepository.Commit();
 
             return createdUser.ToModel();
         }
@@ -42,6 +43,7 @@ namespace PizzaApp.Application.Services.Implementation
             var editedUser = user.Edit(edit);
 
             userRepository.Update(editedUser);
+            userRepository.Commit();
             return editedUser.ToModel();
         }
 
@@ -56,6 +58,7 @@ namespace PizzaApp.Application.Services.Implementation
         public void DeleteUser(int userId)
         {
             userRepository.Delete(userId);
+            userRepository.Commit();
         }
     }
 }

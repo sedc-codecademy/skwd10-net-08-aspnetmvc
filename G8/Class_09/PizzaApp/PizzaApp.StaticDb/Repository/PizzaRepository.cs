@@ -41,5 +41,10 @@ namespace PizzaApp.StaticDb.Repository
             var pizza = GetById(entity.Id);
             pizza = entity;
         }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

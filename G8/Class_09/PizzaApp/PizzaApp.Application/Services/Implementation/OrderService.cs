@@ -44,6 +44,7 @@ namespace PizzaApp.Application.Services.Implementation
             var order = new Order(user, orderedPizzas);
 
             repository.Create(order);
+            repository.Commit();
             emailSender.SendEmailAsync(user.Email, "Thanks for ordering");
             return order.ToViewModel();
         }
@@ -75,6 +76,8 @@ namespace PizzaApp.Application.Services.Implementation
                 var pizza = pizzaRepository.GetById(pizzaModel.PizzaId);
                 order.AddPizza(pizza, pizzaModel.NumberOfPizzas);
             }
+
+            repository.Commit();
         }
     }
 }

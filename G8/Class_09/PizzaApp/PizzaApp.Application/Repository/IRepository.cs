@@ -14,6 +14,6 @@ namespace PizzaApp.Application.Repository
 
         T Create(T entity);
 
-        void DeleteAll();
+        void Commit();
     }
 }
