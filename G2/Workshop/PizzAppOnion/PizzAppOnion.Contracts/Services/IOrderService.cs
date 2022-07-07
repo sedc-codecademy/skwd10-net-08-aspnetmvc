@@ -4,14 +4,14 @@ namespace PizzAppOnion.Contracts.Services
 {
     public interface IOrderService
     {
-        Task<IReadOnlyList<OrderViewModel>> GetAllOrders();
+        Task<IReadOnlyList<OrderViewModel>> GetAllOrdersAsync();
 
-        Task<OrderViewModel> GetOrder(int id);
+        Task<OrderViewModel> GetOrderAsync(int id);
 
         Task CreateOrderAsync(OrderViewModel order);
 
-        Task UpdateOrder(int id, OrderViewModel order);
+        Task UpdateOrderAsync(int id, OrderViewModel order);
 
-        void DeleteOrder(int id);
+        Task DeleteOrderAsync(int id);
     }
 }

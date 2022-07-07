@@ -48,7 +48,12 @@ namespace PizzAppOnion.Storage.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserFk")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserFk");
 
                     b.ToTable("Orders");
                 });
@@ -76,6 +81,24 @@ namespace PizzAppOnion.Storage.Migrations
                     b.ToTable("Pizzas");
                 });
 
+            modelBuilder.Entity("PizzAppOnion.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("OrderPizza", b =>
                 {
                     b.HasOne("PizzAppOnion.Domain.Entities.Order", null)
@@ -89,6 +112,22 @@ namespace PizzAppOnion.Storage.Migrations
                         .HasForeignKey("PizzasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzAppOnion.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("PizzAppOnion.Domain.Entities.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserFk")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PizzAppOnion.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -37,28 +37,30 @@ namespace PizzAppOnion.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public void DeleteOrder(int id)
+        public async Task DeleteOrderAsync(int id)
         {
             _orderRepository.Delete(id);
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<OrderViewModel>> GetAllOrders()
+        public async Task<IReadOnlyList<OrderViewModel>> GetAllOrdersAsync()
         {
             IReadOnlyList<Order> dbOrders = await _orderRepository.GetAllOrdersAsync();
 
             return dbOrders.Select(x => x.ToOrderViewModel()).ToArray();
         }
 
-        public async Task<OrderViewModel> GetOrder(int id)
+        public async Task<OrderViewModel> GetOrderAsync(int id)
         {
-            Order order = await GetOrderById(id);
+            Order order = await GetOrderByIdAsync(id);
 
             return order.ToOrderViewModel();
         }
 
-        public async Task UpdateOrder(int id, OrderViewModel order)
+        public async Task UpdateOrderAsync(int id, OrderViewModel order)
         {
-            Order existingOrder = await GetOrderById(id);
+            Order existingOrder = await GetOrderByIdAsync(id);
 
             var pizzas = await _pizzaRepository.GetPizzasAsync(order.Pizzas);
 
@@ -68,7 +70,7 @@ namespace PizzAppOnion.Services
             _orderRepository.Update(existingOrder);
         }
 
-        private async Task<Order> GetOrderById(int id)
+        private async Task<Order> GetOrderByIdAsync(int id)
         {
             Order order = await _orderRepository.GetOrderAsync(id);
 
