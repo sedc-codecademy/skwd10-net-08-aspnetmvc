@@ -1,24 +1,31 @@
 ﻿using DataAccess.Abstraction;
-using DataAccess.Storage;
 using DomainModels;
 
 namespace DataAccess.Repositories
 {
     public class SizeRepository : IRepository<Size>
     {
-        public List<Size> GetAll()
+        private readonly PizzaAppDbContext _dbContext;
+
+        public SizeRepository(PizzaAppDbContext dbContext)
         {
-            return PizzaDb.Sizes;
+            _dbContext = dbContext;
+        }
+
+        public List<Size> GetAll()
+        {            
+            return _dbContext.Sizes.ToList();
         }
 
         public Size GetById(int id)
         {
-            return PizzaDb.Sizes.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Sizes.FirstOrDefault(x => x.Id == id);
         }
 
         public void Insert(Size entity)
         {
-            PizzaDb.Sizes.Add(entity);
+            _dbContext.Sizes.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Update(Size entity)
@@ -26,8 +33,8 @@ namespace DataAccess.Repositories
             var item = GetById(entity.Id);
             if (item != null)
             {
-                int index = PizzaDb.Sizes.IndexOf(item);
-                PizzaDb.Sizes[index] = entity;
+                _dbContext.Sizes.Update(entity);
+                _dbContext.SaveChanges();
             }
         }
 
@@ -36,7 +43,9 @@ namespace DataAccess.Repositories
             var item = GetById(id);
             if (item != null)
             {
-                PizzaDb.Sizes.Remove(item);
+                _dbContext.Sizes.Remove(item);
+                //_dbContext.Remove(item);
+                _dbContext.SaveChanges();
             }
         }
     }

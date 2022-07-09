@@ -1,24 +1,46 @@
 ﻿using DataAccess.Abstraction;
-using DataAccess.Storage;
 using DomainModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
     public class OrderRepository : IRepository<Order>
     {
+        private readonly PizzaAppDbContext _dbContext;
+
+        public OrderRepository(PizzaAppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public List<Order> GetAll()
         {
-            return PizzaDb.Orders;
+            return _dbContext.Orders
+                .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MenuItem)
+                .ThenInclude(x => x.Pizza)
+                .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MenuItem)
+                .ThenInclude(x => x.Size)
+                .ToList();
         }
 
         public Order GetById(int id)
         {
-            return PizzaDb.Orders.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Orders
+                .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MenuItem)
+                .ThenInclude(x => x.Pizza)
+                .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MenuItem)
+                .ThenInclude(x => x.Size)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void Insert(Order entity)
         {
-            PizzaDb.Orders.Add(entity);
+            _dbContext.Orders.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Update(Order entity)
@@ -26,8 +48,8 @@ namespace DataAccess.Repositories
             var item = GetById(entity.Id);
             if (item != null)
             {
-                int index = PizzaDb.Orders.IndexOf(item);
-                PizzaDb.Orders[index] = entity;
+                _dbContext.Orders.Update(entity);
+                _dbContext.SaveChanges();
             }
         }
 
@@ -36,7 +58,8 @@ namespace DataAccess.Repositories
             var item = GetById(id);
             if (item != null)
             {
-                PizzaDb.Orders.Remove(item);
+                _dbContext.Orders.Remove(item); 
+                _dbContext.SaveChanges();
             }
         }
     }

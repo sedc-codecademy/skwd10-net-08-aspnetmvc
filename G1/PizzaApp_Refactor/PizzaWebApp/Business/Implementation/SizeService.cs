@@ -1,6 +1,5 @@
 ﻿using Business.Abstraction;
 using DataAccess.Abstraction;
-using DataAccess.Helpers;
 using DomainModels;
 using Mappers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -58,7 +57,7 @@ namespace Business.Implementation
 
             if (model.Id == 0)
             {
-                var size = new Size(CommonHelper.GetRandomId(), model.Name, model.Description);
+                var size = new Size(model.Name, model.Description);
 
                 _sizeRepository.Insert(size);
 

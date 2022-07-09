@@ -15,7 +15,7 @@ namespace Mappers
                 Items = order.OrderItems.Select(x => x.ToViewModel()).ToList(),
                 Note = order.Note,
                 PhoneNumber = order.PhoneNumber,
-                TotalPrice = order.TotalPrice
+                TotalPrice = order.OrderItems == null ? 0 : order.OrderItems.Sum(x => x.Quantity * x.MenuItem.Price)
             };
         }
     }

@@ -11,9 +11,8 @@
 
         }
 
-        public Size(int id, string name, string description)
+        public Size(string name, string description)
         {
-            Id = id;
             Name = name;
             Description = description;
         }

@@ -1,6 +1,5 @@
 ﻿using Business.Abstraction;
 using DataAccess.Abstraction;
-using DataAccess.Helpers;
 using DomainModels;
 using Mappers;
 using ViewModels;
@@ -35,7 +34,7 @@ namespace Business.Implementation
 
         public int Save(OrderViewModel model)
         {
-            var order = new Order(CommonHelper.GetRandomId(), model.Address, model.PhoneNumber, model.Note, new List<OrderItem>());
+            var order = new Order(model.Address, model.PhoneNumber, model.Note, new List<OrderItem>());
 
             _orderRepository.Insert(order);
 

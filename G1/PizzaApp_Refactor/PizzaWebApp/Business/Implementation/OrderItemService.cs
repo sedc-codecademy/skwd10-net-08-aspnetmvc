@@ -1,6 +1,5 @@
 ﻿using Business.Abstraction;
 using DataAccess.Abstraction;
-using DataAccess.Helpers;
 using DomainModels;
 using ViewModels;
 
@@ -38,7 +37,7 @@ namespace Business.Implementation
                 throw new Exception($"Quantity must be grater than 0");
             }
 
-            var orderItem = new OrderItem(CommonHelper.GetRandomId(), menuItem, model.Quantity);
+            var orderItem = new OrderItem(menuItem, model.Quantity);
 
             order.OrderItems.Add(orderItem);
 
