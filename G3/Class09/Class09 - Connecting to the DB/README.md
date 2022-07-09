@@ -105,6 +105,9 @@ For entity framework to keep track of all the changes in our code and the databa
 3. Package Manager Console
 4. A console will open at the bottom of your visual studio instance
 
+### Nuget packages to install  
+![Nuget packages](img/packages.png)
+
 ### Creating a database and migrations
 
 For us to create a database first we need to create a migration. This is the first migration from which the database will be built. This migration is usually called something like init or with the word init to mark it as the first initial migration. After we migrate, the migration is created in our project. Migrations in the project do not change the database. If we want to update the database with the latest migration we must write a command.

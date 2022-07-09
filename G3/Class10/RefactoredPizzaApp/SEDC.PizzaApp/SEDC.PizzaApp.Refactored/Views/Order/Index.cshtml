@@ -1,0 +1,36 @@
+﻿@model List<OrderListViewModel>
+
+
+<div class="text-center">
+    <a asp-action="Create" asp-controller="Order" class="btn btn-outline-success">Create order</a>
+    <h2 class="display-4">List of orders:</h2>
+</div>
+
+
+<div class="row">
+    @foreach (var order in Model)
+    {
+        string cardColor = order.IsDelivered ? "success" : "danger";
+        <div class="card text-white bg-@cardColor mb-3" style="max-width: 18rem; margin-left:10px;">
+            @if(order.IsDelivered)
+            {
+                <div class="card-header">The order was delivered!</div>
+            }else
+            {
+                <div class="card-header">The order was not delivered!</div>
+            }
+            <div class="card-body">
+                <h5 class="card-title"> User: @order.UserFullName</h5>
+                <ol>
+                    @foreach (var pizza in order.PizzaNames)
+                    {
+                        <li>@pizza</li>
+                    }
+                </ol>
+            </div>
+            <a class="text-light" asp-action="Details" asp-controller="Order" asp-route-id="@order.Id">See details</a>
+            <a class="text-light" asp-action="Edit" asp-controller="Order" asp-route-id="@order.Id">Edit order</a>
+            <a class="text-light" asp-action="Delete" asp-controller="Order" asp-route-id="@order.Id">Delete orrder</a>
+        </div>
+    }
+</div>

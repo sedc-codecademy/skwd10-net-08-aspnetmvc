@@ -1,0 +1,27 @@
+﻿@model List<Company>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @foreach (var company in Model)
+            {
+                <p>Name: @company.Name</p>
+                <p>City: @company.City</p>
+                <p>Address: @company.Address</p>
+                <p>
+                    Employees:
+                </p>
+                <ul>
+                    @foreach (var emp in company.Employees)
+                    {
+                       
+                        <li>Name: @($"Mr/Ms {emp.FirstName} {emp.LastName}")</li>
+                        <li>Years of experiance: @emp.YearsOfExperiance</li>
+                    }
+                </ul>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
