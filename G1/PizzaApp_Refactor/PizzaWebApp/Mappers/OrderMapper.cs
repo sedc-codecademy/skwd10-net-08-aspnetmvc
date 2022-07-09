@@ -12,6 +12,7 @@ namespace Mappers
             {
                 Id = order.Id,
                 Address = order.Address,
+                Name = order.Name,
                 Items = order.OrderItems.Select(x => x.ToViewModel()).ToList(),
                 Note = order.Note,
                 PhoneNumber = order.PhoneNumber,
