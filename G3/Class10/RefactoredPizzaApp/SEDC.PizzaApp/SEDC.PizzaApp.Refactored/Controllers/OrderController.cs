@@ -5,6 +5,13 @@ using SEDC.PizzaApp.ViewModels.OrderViewModels;
 
 namespace SEDC.PizzaApp.Refactored.Controllers
 {
+    // Connect MVC Application with Database using EntityFramework
+    
+    // 1. Install nuget packages for EntityFramework.Core - Check the README.md
+    // 2. Implement DbContext class with all the db sets and relation configurations
+    // 3. Add the dbContext in Program.cs class
+    // 4. Inject the dbContext in the Repositories and use it
+
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
