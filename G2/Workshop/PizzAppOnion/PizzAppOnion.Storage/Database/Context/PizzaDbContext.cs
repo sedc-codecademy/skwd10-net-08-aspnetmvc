@@ -17,6 +17,8 @@ namespace PizzAppOnion.Storage.Database.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pizza>().Property(x => x.Price).HasColumnType("money");
+            modelBuilder.Entity<User>().HasMany(x => x.Orders).WithOne(x => x.User).HasForeignKey(x => x.UserFk);
+            modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnType("nvarchar(255)").IsRequired();
         }
     }
 }

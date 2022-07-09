@@ -1,5 +1,8 @@
 using Business.Abstraction;
 using Business.Implementation;
+using DataAccess.Abstraction;
+using DataAccess.Repositories;
+using DomainModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,12 @@ builder.Services.AddTransient<ISizeService, SizeService>();
 builder.Services.AddTransient<IMenuService, MenuService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IOrderItemService, OrderItemService>();
+
+builder.Services.AddTransient<IRepository<Pizza>, PizzaRepository>();
+builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
+builder.Services.AddTransient<IRepository<Size>, SizeRepository>();
+builder.Services.AddTransient<IRepository<MenuItem>, MenuItemRepository>();
+builder.Services.AddTransient<IRepository<OrderItem>, OrderItemRepository>();
 
 var app = builder.Build();
 

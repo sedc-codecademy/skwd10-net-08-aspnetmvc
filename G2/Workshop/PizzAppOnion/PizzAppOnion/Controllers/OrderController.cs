@@ -20,7 +20,7 @@ namespace PizzAppOnion.API.Controllers
         // GET: OrderController
         public async Task<ActionResult> Index()
         {
-            IEnumerable<OrderViewModel> orderListViewModel = await _orderService.GetAllOrders();
+            IEnumerable<OrderViewModel> orderListViewModel = await _orderService.GetAllOrdersAsync();
 
             return View(orderListViewModel);
         }
@@ -28,7 +28,7 @@ namespace PizzAppOnion.API.Controllers
         // GET: OrderController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            OrderViewModel order = await _orderService.GetOrder(id);
+            OrderViewModel order = await _orderService.GetOrderAsync(id);
             return View(order);
         }
 
@@ -54,7 +54,7 @@ namespace PizzAppOnion.API.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             ViewBag.Pizzas = await _pizzaService.GetAllPizzasAsync();
-            OrderViewModel order = await _orderService.GetOrder(id);
+            OrderViewModel order = await _orderService.GetOrderAsync(id);
             return View(order);
         }
 
@@ -63,14 +63,14 @@ namespace PizzAppOnion.API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, OrderViewModel order)
         {
-            _orderService.UpdateOrder(id, order);
+            _orderService.UpdateOrderAsync(id, order);
             return RedirectToAction("Edit", id);
         }
 
         // GET: OrderController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            OrderViewModel order = await _orderService.GetOrder(id);
+            OrderViewModel order = await _orderService.GetOrderAsync(id);
             return View(order);
         }
 
@@ -79,7 +79,7 @@ namespace PizzAppOnion.API.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            _orderService.DeleteOrder(id);
+            _orderService.DeleteOrderAsync(id);
             return RedirectToAction("Index");
         }
     }

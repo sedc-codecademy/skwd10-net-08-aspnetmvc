@@ -3,7 +3,7 @@ using DomainModels;
 
 namespace DataAccess.Storage
 {
-    public static class PizzaDb
+    internal static class PizzaDb
     {
         public static List<Pizza> Pizzas = new List<Pizza>
         {

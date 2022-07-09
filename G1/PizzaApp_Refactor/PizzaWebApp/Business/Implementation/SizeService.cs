@@ -1,6 +1,6 @@
 ﻿using Business.Abstraction;
+using DataAccess.Abstraction;
 using DataAccess.Helpers;
-using DataAccess.Storage;
 using DomainModels;
 using Mappers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,20 +10,29 @@ namespace Business.Implementation
 {
     public class SizeService : ISizeService
     {
+        private readonly IRepository<Size> _sizeRepository;
+        private readonly IRepository<MenuItem> _menuItemRepository;
+
+        public SizeService(IRepository<Size> sizeRepository, IRepository<MenuItem> menuItemRepository)
+        {
+            _sizeRepository = sizeRepository;
+            _menuItemRepository = menuItemRepository;
+        }
+
         public List<SizeViewModel> GetAll()
         {
-            var sizes = PizzaDb.Sizes.Select(x => x.ToViewModel()).OrderBy(x => x.Description).ToList();
+            var sizes = _sizeRepository.GetAll().Select(x => x.ToViewModel()).OrderBy(x => x.Description).ToList();
             return sizes;
         }
 
         public List<SelectListItem> GetSizesSelectList()
         {
-            return PizzaDb.Sizes.Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
+            return _sizeRepository.GetAll().Select(x => new SelectListItem(x.Name, x.Id.ToString())).ToList();
         }
 
         public SizeViewModel GetById(int id)
         {
-            var size = PizzaDb.Sizes.FirstOrDefault(x => x.Id == id);
+            var size = _sizeRepository.GetById(id);
 
             if (size == null)
             {
@@ -41,7 +50,7 @@ namespace Business.Implementation
                 throw new Exception($"All properties are required.");
             }
 
-            if (PizzaDb.Sizes.Any(x => x.Name.ToLower() == model.Name.ToLower() && x.Id != model.Id))
+            if (_sizeRepository.GetAll().Any(x => x.Name.ToLower() == model.Name.ToLower() && x.Id != model.Id))
             {
                 throw new Exception($"Size with the name {model.Name} already exists");
             }
@@ -51,43 +60,41 @@ namespace Business.Implementation
             {
                 var size = new Size(CommonHelper.GetRandomId(), model.Name, model.Description);
 
-                PizzaDb.Sizes.Add(size);
+                _sizeRepository.Insert(size);
 
                 return;
             }
 
-            var existingSize = PizzaDb.Sizes.FirstOrDefault(x => x.Id == model.Id);
+            var existingSize = _sizeRepository.GetById(model.Id);
 
             if (existingSize == null)
             {
                 throw new Exception($"Size with id {model.Id} does not exist");
             }
 
-            PizzaDb.Sizes.Remove(existingSize);
-
             existingSize.Name = model.Name;
             existingSize.Description = model.Description;
 
-            PizzaDb.Sizes.Add(existingSize);
+            _sizeRepository.Update(existingSize);
         }
 
         public void Delete(int id)
         {
-            var existingSize = PizzaDb.Sizes.FirstOrDefault(x => x.Id == id);
+            var existingSize = _sizeRepository.GetById(id);
 
             if (existingSize == null)
             {
                 throw new Exception($"Size with id {id} does not exist");
             }
 
-            var menuItems = PizzaDb.MenuItems.Where(x => x.Size.Id == id).ToList();
+            var menuItems = _menuItemRepository.GetAll().Where(x => x.Size.Id == id).ToList();
 
             foreach (var menuItem in menuItems)
             {
-                PizzaDb.MenuItems.Remove(menuItem);
+                _menuItemRepository.DeleteById(menuItem.Id);
             }
 
-            PizzaDb.Sizes.Remove(existingSize);
+            _sizeRepository.DeleteById(existingSize.Id);
         }
     }
 }
