@@ -1,23 +1,15 @@
-using SEDC.PizzaApp.DataAccess.Repositories;
-using SEDC.PizzaApp.DataAccess.Repositories.Interfaces;
-using SEDC.PizzaApp.Domain.Models;
-using SEDC.PizzaApp.Services.Services;
-using SEDC.PizzaApp.Services.Services.Interfaces;
+using SEDC.PizzaApp.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddTransient<IOrderService, OrderService>();
-builder.Services.AddTransient<IPizzaService, PizzaService>();
-builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.InjectServices();
+builder.Services.InjectRepositories();
 
-builder.Services.AddTransient<IPizzaRepository, PizzaRepository>();
-builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
-builder.Services.AddTransient<IRepository<User>, UserRepository>();
-
-
+string connString = builder.Configuration.GetConnectionString("PizzaAppDbConnection");
+builder.Services.InjectDbContext(connString);
 
 
 

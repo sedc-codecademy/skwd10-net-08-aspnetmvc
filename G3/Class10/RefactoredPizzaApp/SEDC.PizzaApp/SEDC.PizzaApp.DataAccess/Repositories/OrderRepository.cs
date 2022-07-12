@@ -1,4 +1,5 @@
-﻿using SEDC.PizzaApp.DataAccess.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SEDC.PizzaApp.DataAccess.Data;
 using SEDC.PizzaApp.DataAccess.Repositories.Interfaces;
 using SEDC.PizzaApp.Domain.Models;
 using System;
@@ -11,29 +12,43 @@ namespace SEDC.PizzaApp.DataAccess.Repositories
 {
     public class OrderRepository : IRepository<Order>
     {
+        private readonly PizzaAppDbContext _context;
+        public OrderRepository(PizzaAppDbContext context)
+        {
+            _context = context;
+        }
+
         public List<Order> GetAll()
         {
-            return StaticDb.Orders;
+            return _context.Orders
+                .Include(x => x.User)
+                .Include(x => x.PizzaOrders)
+                .ThenInclude(x => x.Pizza).ToList();
         }
         public Order GetById(int id)
         {
-            return StaticDb.Orders.SingleOrDefault(x => x.Id == id);
+            return _context.Orders
+                   .Include(x => x.PizzaOrders)
+                   .ThenInclude(x => x.Pizza)
+                   .Include(x => x.User)
+                   .FirstOrDefault(x => x.Id == id);
         }
         public void Insert(Order entity)
         {
-            entity.Id = ++StaticDb.OrderId;
-            StaticDb.Orders.Add(entity);
+            //entity.Id = ++_context.OrderId;
+            _context.Orders.Add(entity);
+            _context.SaveChanges();
         }
         public void Update(Order entity)
         {
-            Order orderDb = StaticDb.Orders.SingleOrDefault(x => x.Id == entity.Id);
-            var index = StaticDb.Orders.IndexOf(orderDb);
-            StaticDb.Orders[index] = entity;
+            _context.Orders.Update(entity);
+            _context.SaveChanges();
         }
         public void Delete(int id)
         {
-            Order orderDb = StaticDb.Orders.SingleOrDefault(x => x.Id == id);
-            StaticDb.Orders.Remove(orderDb);
+            Order orderDb = _context.Orders.SingleOrDefault(x => x.Id == id);
+            _context.Orders.Remove(orderDb);
+            _context.SaveChanges();
         }
     }
 }

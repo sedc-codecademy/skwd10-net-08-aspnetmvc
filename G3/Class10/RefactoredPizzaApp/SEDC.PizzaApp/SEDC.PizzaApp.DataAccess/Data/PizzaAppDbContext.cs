@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SEDC.PizzaApp.DataAccess.Relations;
 using SEDC.PizzaApp.Domain.Models;
 
 namespace SEDC.PizzaApp.DataAccess.Data
@@ -19,10 +20,8 @@ namespace SEDC.PizzaApp.DataAccess.Data
         {
             // Defining relationships
 
-            modelBuilder.Entity<Order>()
-                .HasMany(x => x.PizzaOrders)
-                .WithOne(x => x.Order)
-                .HasForeignKey(x => x.OrderId);
+            // Define relations in external method
+            RelationsResolver.AddOrderRelations(modelBuilder);
 
             modelBuilder.Entity<Pizza>()
                 .HasMany(x => x.PizzaOrders)
@@ -34,7 +33,8 @@ namespace SEDC.PizzaApp.DataAccess.Data
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
 
-            // Data seed
+
+            // Data seed by using external method
             DataSeed.InsertDataInDb(modelBuilder);
         }
 

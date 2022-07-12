@@ -11,29 +11,39 @@ namespace SEDC.PizzaApp.DataAccess.Repositories
 {
     public class UserRepository : IRepository<User>
     {
+        private readonly PizzaAppDbContext _context;
+        public UserRepository(PizzaAppDbContext context)
+        {
+            _context = context;
+        }
+
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            User userDb = _context.Users.SingleOrDefault(x => x.Id == id);
+            _context.Users.Remove(userDb);
+            _context.SaveChanges();
         }
 
         public List<User> GetAll()
         {
-            return StaticDb.Users;
+            return _context.Users.ToList();
         }
 
         public User GetById(int id)
         {
-            return StaticDb.Users.SingleOrDefault(x => x.Id == id);
+            return _context.Users.SingleOrDefault(x => x.Id == id);
         }
 
         public void Insert(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Update(User entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Update(entity);
+            _context.SaveChanges();
         }
     }
 }
