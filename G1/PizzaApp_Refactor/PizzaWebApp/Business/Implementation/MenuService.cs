@@ -1,6 +1,5 @@
 ﻿using Business.Abstraction;
 using DataAccess.Abstraction;
-using DataAccess.Helpers;
 using DomainModels;
 using Mappers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -80,7 +79,7 @@ namespace Business.Implementation
 
             if (model.Id == 0)
             {
-                var menuItem = new MenuItem(CommonHelper.GetRandomId(), selectedPizza, selectedSize, model.Price);
+                var menuItem = new MenuItem(selectedPizza.Id, selectedSize.Id, model.Price);
 
                 _menuItemRepository.Insert(menuItem);
 

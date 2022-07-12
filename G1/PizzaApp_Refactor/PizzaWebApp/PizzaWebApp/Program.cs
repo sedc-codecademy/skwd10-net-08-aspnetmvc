@@ -1,8 +1,10 @@
 using Business.Abstraction;
 using Business.Implementation;
+using DataAccess;
 using DataAccess.Abstraction;
 using DataAccess.Repositories;
 using DomainModels;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,9 @@ builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
 builder.Services.AddTransient<IRepository<Size>, SizeRepository>();
 builder.Services.AddTransient<IRepository<MenuItem>, MenuItemRepository>();
 builder.Services.AddTransient<IRepository<OrderItem>, OrderItemRepository>();
+
+builder.Services.AddDbContext<PizzaAppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

@@ -1,5 +1,4 @@
 ﻿using Business.Abstraction;
-using DataAccess.Helpers;
 using DomainModels;
 using Mappers;
 using ViewModels;
@@ -53,7 +52,7 @@ namespace Business.Implementation
 
             if (model.Id == 0)
             {
-                var pizza = new Pizza(CommonHelper.GetRandomId(), model.Name, model.Description, model.ImageUrl);
+                var pizza = new Pizza(model.Name, model.Description, model.ImageUrl);
 
                 _pizzaRepository.Insert(pizza);
 

@@ -5,6 +5,13 @@ namespace DataAccess.Repositories
 {
     public class OrderItemRepository : IRepository<OrderItem>
     {
+        private readonly PizzaAppDbContext _dbContext;
+
+        public OrderItemRepository(PizzaAppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void DeleteById(int id)
         {
             throw new NotImplementedException();

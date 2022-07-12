@@ -5,7 +5,9 @@ namespace DomainModels
     public class MenuItem
     {
         public int Id { get; set; }
+        public int PizzaId { get; set; }
         public Pizza Pizza { get; set; }
+        public int SizeId { get; set; }
         public Size Size { get; set; }
         public decimal Price { get; set; }
 
@@ -14,11 +16,10 @@ namespace DomainModels
 
         }
 
-        public MenuItem(int id, Pizza pizza, Size size, decimal price)
+        public MenuItem(int pizzaId, int sizeId, decimal price)
         {
-            Id = id;
-            Pizza = pizza;
-            Size = size;
+            PizzaId = pizzaId;
+            SizeId = sizeId;
             Price = price;
         }
 

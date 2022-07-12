@@ -1,24 +1,32 @@
 ﻿using DataAccess.Abstraction;
-using DataAccess.Storage;
 using DomainModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
     public class MenuItemRepository : IRepository<MenuItem>
     {
+        private readonly PizzaAppDbContext _dbContext;
+
+        public MenuItemRepository(PizzaAppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public List<MenuItem> GetAll()
         {
-            return PizzaDb.MenuItems;
+            return _dbContext.MenuItems.Include(x => x.Pizza).Include(x => x.Size).ToList();
         }
 
         public MenuItem GetById(int id)
         {
-            return PizzaDb.MenuItems.FirstOrDefault(x => x.Id == id);
+            return _dbContext.MenuItems.Include(x => x.Pizza).Include(x => x.Size).FirstOrDefault(x => x.Id == id);
         }
 
         public void Insert(MenuItem entity)
         {
-            PizzaDb.MenuItems.Add(entity);
+            _dbContext.MenuItems.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Update(MenuItem entity)
@@ -26,8 +34,8 @@ namespace DataAccess.Repositories
             var item = GetById(entity.Id);
             if (item != null)
             {
-                int index = PizzaDb.MenuItems.IndexOf(item);
-                PizzaDb.MenuItems[index] = entity;
+                _dbContext.MenuItems.Update(entity);
+                _dbContext.SaveChanges();
             }
         }
 
@@ -36,7 +44,8 @@ namespace DataAccess.Repositories
             var item = GetById(id);
             if (item != null)
             {
-                PizzaDb.MenuItems.Remove(item);
+                _dbContext.MenuItems.Remove(item);
+                _dbContext.SaveChanges();
             }
         }
     }
